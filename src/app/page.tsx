@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import Header from '@/components/Common/Header';
+import Header from '@/components/Main/Header';
 import Hero from '@/components/Main/Hero';
 
 export default function MainPage() {

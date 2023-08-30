@@ -4,9 +4,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
-import EKGProLogo from '@/images/logo/logo_b.png';
+import EKGProLogo from '@/images/logo/logo_black.svg';
 
-const navigation = [{ name: 'Log in', href: '#' }];
+const navigation = [
+  { name: 'Log in', href: '/login' },
+  { name: 'Register', href: '/register' },
+];
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -33,13 +36,13 @@ export default function Header() {
             </button>
             <div className="hidden lg:ml-12 lg:flex lg:gap-x-14">
               {navigation.map(item => (
-                <a
+                <Link
                   key={item.name}
                   href={item.href}
                   className="text-sm font-semibold leading-6 text-gray-900"
                 >
                   {item.name}
-                </a>
+                </Link>
               ))}
             </div>
           </nav>
