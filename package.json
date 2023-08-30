@@ -1,5 +1,5 @@
 {
-  "name": "ekg-pro",
+  "name": "jid-3131-ekgpro",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,29 +9,36 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@types/node": "18.15.10",
-    "@types/react-dom": "18.0.11",
-    "eslint": "8.36.0",
-    "eslint-config-next": "13.2.4",
-    "flowbite": "^1.6.4",
-    "flowbite-react": "^0.4.2",
-    "heroicons": "^2.0.17",
-    "next": "^13.2.4",
+    "@headlessui/react": "^1.7.17",
+    "@heroicons/react": "^2.0.18",
+    "@material-tailwind/react": "^2.1.1",
+    "@types/node": "20.5.7",
+    "@types/react": "18.2.21",
+    "@types/react-dom": "18.2.7",
+    "@typescript-eslint/eslint-plugin": "^6.5.0",
+    "autoprefixer": "10.4.15",
+    "clsx": "^2.0.0",
+    "eslint": "^8.48.0",
+    "eslint-config-next": "13.4.19",
+    "next": "13.4.19",
+    "postcss": "8.4.29",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-icons": "^4.8.0",
-    "sass": "^1.60.0",
-    "typescript": "5.0.2"
+    "tailwindcss": "3.3.3",
+    "typescript": "5.2.2"
   },
   "devDependencies": {
-    "@types/react": "^18.0.33",
-    "@typescript-eslint/eslint-plugin": "^5.57.0",
-    "autoprefixer": "^10.4.14",
-    "eslint-config-prettier": "^8.8.0",
+    "@tailwindcss/forms": "^0.5.6",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-security": "^1.7.1",
+    "eslint-plugin-sonarjs": "^0.21.0",
+    "eslint-plugin-unicorn": "^48.0.1",
     "husky": "^8.0.3",
-    "lint-staged": "^13.2.0",
-    "postcss": "^8.4.21",
-    "prettier": "^2.8.7",
-    "tailwindcss": "^3.2.7"
+    "lint-staged": "^14.0.1",
+    "prettier": "^3.0.3"
   }
 }
