@@ -2,19 +2,33 @@ import MainSidebar from '@/components/MainSidebar/MainSidebar'
 import MainTable from '@/components/MainTable/MainTable'
 import Searchbar from '@/components/Searchbar/Searchbar'
 import Title from '@/components/Title/title'
+import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
 
 export interface PatientData {
   name: string
-  id: string
+  patientid: string
   date: string
-  time: string
+  time?: string
   doctor: string
   room: string
   team: string
-  diagnosis: string
+  primary_diagnosis: string
 }
 
 const Patients = (): JSX.Element => {
+  const router = useRouter();
+
+  const [patientData, setPatientData] = useState<Array<PatientData>>([])
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/patientapi')
+      .then((res) => res.json())
+      .then((data) => {
+        setPatientData(data)
+      })
+  }, []);
+
   const columns = [
     //blank reserved for patient image
     ' ',
@@ -27,18 +41,6 @@ const Patients = (): JSX.Element => {
     'Team',
     'Primary Diagnosis',
   ]
-  const tableData = [
-    {
-      name: 'Leslie Alexander',
-      id: '0000000000',
-      date: '10/10/2023',
-      time: '08:00 AM',
-      doctor: 'Dr. Jacob Jones',
-      room: '101',
-      team: 'A',
-      diagnosis: 'Some Condition',
-    },
-  ]
 
   return (
     <>
@@ -46,7 +48,7 @@ const Patients = (): JSX.Element => {
       <div className="MainScreen">
         <Searchbar />
         <Title title={'Patients'} />
-        <MainTable columns={columns} tableData={tableData} />
+        <MainTable columns={columns} tableData={patientData} />
       </div>
     </>
   )

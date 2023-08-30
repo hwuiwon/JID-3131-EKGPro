@@ -37,7 +37,7 @@ const MainTable: React.FC<TableProps> = (props) => {
             return (
               <Table.Row
                 className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                key={data.date + data.id}
+                key={data.date + data.patientid}
               >
                 <Table.Cell>
                   <img 
@@ -49,13 +49,13 @@ const MainTable: React.FC<TableProps> = (props) => {
                     {data.name}
                   </a>
                 </Table.Cell>
-                <Table.Cell>{data.id}</Table.Cell>
+                <Table.Cell>{data.patientid}</Table.Cell>
                 <Table.Cell>{data.date}</Table.Cell>
                 <Table.Cell>{data.time}</Table.Cell>
                 <Table.Cell>{data.doctor}</Table.Cell>
                 <Table.Cell>{data.room}</Table.Cell>
                 <Table.Cell>{data.team}</Table.Cell>
-                <Table.Cell>{data.diagnosis}</Table.Cell>
+                <Table.Cell>{data.primary_diagnosis}</Table.Cell>
               </Table.Row>
             )
           })}

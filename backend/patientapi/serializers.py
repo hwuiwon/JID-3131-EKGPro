@@ -8,6 +8,7 @@ class PatientSerializer(serializers.ModelSerializer):
             "name",
             "patientid",
             "date",
+            "time",
             "doctor",
             "room",
             "team",

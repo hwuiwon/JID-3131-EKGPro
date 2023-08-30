@@ -1,5 +1,12 @@
 ## Getting Started
+# For backend
+Make sure you have the appropriate packages installed for the Django server by doing the following:
+```bash
+cd backend
+pip install -r requirements.txt
+```
 
+## Running the servers for dev environment
 First, run the Next.js development server:
 
 ```bash
@@ -20,6 +27,11 @@ python manage.py runserver
 ```
 
 The Django connection will be on [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+
+## When new packages are installed in Django, update the package dependencies by the following:
+```bash
+pip freeze > requirements.txt
+```
 
 ## Rest of Next.js project README documentation
 
