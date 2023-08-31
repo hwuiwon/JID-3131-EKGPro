@@ -1,52 +1,127 @@
 'use client';
 
-import { Bars3Icon, MagnifyingGlassIcon } from '@heroicons/react/20/solid';
-import { useState } from 'react';
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  ChatBubbleLeftRightIcon,
+  DocumentTextIcon,
+  UsersIcon,
+} from '@heroicons/react/24/outline';
+import clsx from 'clsx';
+import Link from 'next/link';
 import React from 'react';
 
 import Sidebar from '@/components/Common/Sidebar';
+import { Page } from '@/constants/Navigation';
+
+const stats = [
+  {
+    id: 1,
+    name: 'Total Patients',
+    stat: '1,210',
+    icon: UsersIcon,
+    change: '122',
+    changeType: 'increase',
+    href: '/patient',
+  },
+  {
+    id: 2,
+    name: 'Total EKGs',
+    stat: '1,956',
+    icon: DocumentTextIcon,
+    change: '141',
+    changeType: 'increase',
+    href: '/patient',
+  },
+  {
+    id: 3,
+    name: 'Total Appointments',
+    stat: '3,192',
+    icon: ChatBubbleLeftRightIcon,
+    change: '201',
+    changeType: 'increase',
+    href: '/appointment',
+  },
+];
 
 export default function Example() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
   return (
     <React.Fragment>
-      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      <Sidebar selectedPage={Page.DASHBOARD} />
       <div className="xl:pl-72">
-        {/* Sticky search header */}
-        <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-6 border-b border-white/5 bg-gray-900 px-4 shadow-sm sm:px-6 lg:px-8">
-          <button
-            type="button"
-            className="-m-2.5 p-2.5 text-white xl:hidden"
-            onClick={() => setSidebarOpen(true)}
-          >
-            <span className="sr-only">Open sidebar</span>
-            <Bars3Icon className="h-5 w-5" aria-hidden="true" />
-          </button>
+        <main>
+          <div className="p-5">
+            <h3 className="text-lg font-semibold leading-6 text-gray-900">
+              Stats (Last 30 days)
+            </h3>
 
-          <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
-            <form className="flex flex-1" action="#" method="GET">
-              <label htmlFor="search-field" className="sr-only">
-                Search
-              </label>
-              <div className="relative w-full">
-                <MagnifyingGlassIcon
-                  className="pointer-events-none absolute inset-y-0 left-0 h-full w-5 text-gray-500"
-                  aria-hidden="true"
-                />
-                <input
-                  id="search-field"
-                  className="block h-full w-full border-0 bg-transparent py-0 pl-8 pr-0 text-white focus:ring-0 sm:text-sm"
-                  placeholder="Search..."
-                  type="search"
-                  name="search"
-                />
-              </div>
-            </form>
+            <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {stats.map(item => (
+                <div
+                  key={item.id}
+                  className="relative overflow-hidden rounded-lg bg-white border border-gray-200- px-4 pb-12 pt-5 shadow sm:px-6 sm:pt-6"
+                >
+                  <dt>
+                    <div className="absolute rounded-md bg-blue-500 p-3">
+                      <item.icon
+                        className="h-6 w-6 text-white"
+                        aria-hidden="true"
+                      />
+                    </div>
+                    <p className="ml-16 truncate text-sm font-medium text-gray-600">
+                      {item.name}
+                    </p>
+                  </dt>
+                  <dd className="ml-16 flex items-baseline pb-6 sm:pb-7">
+                    <p className="text-2xl font-semibold text-gray-900">
+                      {item.stat}
+                    </p>
+                    <p
+                      className={clsx(
+                        item.changeType === 'increase'
+                          ? 'text-green-600'
+                          : 'text-red-600',
+                        'ml-2 flex items-baseline text-sm font-semibold'
+                      )}
+                    >
+                      {item.changeType === 'increase' ? (
+                        <ArrowUpIcon
+                          className="h-5 w-5 flex-shrink-0 self-center text-green-500"
+                          aria-hidden="true"
+                        />
+                      ) : (
+                        <ArrowDownIcon
+                          className="h-5 w-5 flex-shrink-0 self-center text-red-500"
+                          aria-hidden="true"
+                        />
+                      )}
+
+                      <span className="sr-only">
+                        {' '}
+                        {item.changeType === 'increase'
+                          ? 'Increased'
+                          : 'Decreased'}{' '}
+                        by{' '}
+                      </span>
+                      {item.change}
+                    </p>
+                    <div className="absolute inset-x-0 bottom-0 bg-gray-50 px-4 py-4 sm:px-6">
+                      <div className="text-sm">
+                        <Link
+                          href={item.href}
+                          className="font-medium text-blue-600 hover:text-blue-500"
+                        >
+                          View all
+                          <span className="sr-only"> {item.name} stats</span>
+                        </Link>
+                      </div>
+                    </div>
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </div>
-        </div>
-
-        <main className="lg:pr-96"></main>
+        </main>
       </div>
     </React.Fragment>
   );

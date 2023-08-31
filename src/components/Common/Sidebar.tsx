@@ -1,30 +1,27 @@
-/* eslint-disable sonarjs/no-duplicate-string */
 import { Dialog, Transition } from '@headlessui/react';
-import { FolderIcon, ServerIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Fragment } from 'react';
+import { Fragment, useMemo, useState } from 'react';
+import React from 'react';
 
+import { Page, getNavigationItems } from '@/constants/Navigation';
 import EKGProWhiteLogo from '@/images/logo/logo_white.svg';
 import SomeGuy from '@/images/sample/people/guy.jpeg';
 
-const navigation = [
-  { name: 'Projects', href: '#', icon: FolderIcon, current: true },
-  { name: 'Deployments', href: '#', icon: ServerIcon, current: false },
-];
-
 interface SidebarProperties {
-  sidebarOpen: boolean;
-  setSidebarOpen: (value: boolean) => void;
+  selectedPage: Page;
 }
 
-export default function Sidebar({
-  sidebarOpen,
-  setSidebarOpen,
-}: SidebarProperties) {
+export default function Sidebar({ selectedPage }: SidebarProperties) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const navItems = useMemo(() => {
+    return getNavigationItems(selectedPage);
+  }, [selectedPage]);
+
   return (
-    <div>
+    <React.Fragment>
       <Transition.Root show={sidebarOpen} as={Fragment}>
         <Dialog
           as="div"
@@ -78,13 +75,13 @@ export default function Sidebar({
                   </div>
                 </Transition.Child>
                 {/* Sidebar component, swap this element with another sidebar if you like */}
-                <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 ring-1 ring-white/10">
+                <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4 ring-1 ring-white/10">
                   <div className="flex h-16 shrink-0 items-center">
                     <Link href="/">
                       <Image
                         className="h-8 w-auto"
                         src={EKGProWhiteLogo}
-                        alt="Logo"
+                        alt=""
                       />
                     </Link>
                   </div>
@@ -92,9 +89,9 @@ export default function Sidebar({
                     <ul className="flex flex-1 flex-col gap-y-7">
                       <li>
                         <ul className="-mx-2 space-y-1">
-                          {navigation.map(item => (
+                          {navItems.map(item => (
                             <li key={item.name}>
-                              <a
+                              <Link
                                 href={item.href}
                                 className={clsx(
                                   item.current
@@ -108,10 +105,29 @@ export default function Sidebar({
                                   aria-hidden="true"
                                 />
                                 {item.name}
-                              </a>
+                              </Link>
                             </li>
                           ))}
                         </ul>
+                      </li>
+                      <li className="-mx-6 mt-auto">
+                        <Link
+                          href="/account"
+                          className={clsx(
+                            'flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white',
+                            selectedPage === Page.ACCOUNT
+                              ? 'bg-gray-800'
+                              : 'hover:bg-gray-800'
+                          )}
+                        >
+                          <Image
+                            className="h-8 w-8 rounded-full bg-white"
+                            src={SomeGuy}
+                            alt=""
+                          />
+                          <span className="sr-only">Your profile</span>
+                          <span aria-hidden="true">Tom Cruise</span>
+                        </Link>
                       </li>
                     </ul>
                   </nav>
@@ -121,27 +137,32 @@ export default function Sidebar({
           </div>
         </Dialog>
       </Transition.Root>
-
+      <div className="sticky top-0 z-40 flex items-center gap-x-6 bg-gray-900 px-4 py-4 shadow-sm sm:px-6 xl:hidden">
+        <button
+          type="button"
+          className="-m-2.5 p-2.5 text-gray-400 xl:hidden"
+          onClick={() => setSidebarOpen(true)}
+        >
+          <span className="sr-only">Open sidebar</span>
+          <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+        </button>
+      </div>
       {/* Static sidebar for desktop */}
-      <div className="hidden xl:fixed xl:inset-y-0 xl:z-50 xl:flex xl:w-72 xl:flex-col bg-gray-900">
+      <div className="hidden xl:fixed xl:z-50 xl:flex xl:w-72 xl:flex-col xl:min-h-screen">
         {/* Sidebar component, swap this element with another sidebar if you like */}
-        <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-black/10 px-6 ring-1 ring-white/5">
+        <div className="bg-gray-900 border-white flex grow flex-col gap-y-5 overflow-y-auto bg-black/10 px-6 ring-1 ring-white/5">
           <div className="flex h-16 shrink-0 items-center">
             <Link href="/">
-              <Image
-                className="h-8 w-auto"
-                src={EKGProWhiteLogo}
-                alt="Your Company"
-              />
+              <Image className="h-8 w-auto" src={EKGProWhiteLogo} alt="" />
             </Link>
           </div>
           <nav className="flex flex-1 flex-col">
             <ul className="flex flex-1 flex-col gap-y-7">
               <li>
                 <ul className="-mx-2 space-y-1">
-                  {navigation.map(item => (
+                  {navItems.map(item => (
                     <li key={item.name}>
-                      <a
+                      <Link
                         href={item.href}
                         className={clsx(
                           item.current
@@ -155,29 +176,35 @@ export default function Sidebar({
                           aria-hidden="true"
                         />
                         {item.name}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
               </li>
+
               <li className="-mx-6 mt-auto">
                 <Link
-                  href="/profile"
-                  className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-gray-800"
+                  href="/account"
+                  className={clsx(
+                    'flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white',
+                    selectedPage === Page.ACCOUNT
+                      ? 'bg-gray-800'
+                      : 'hover:bg-gray-800'
+                  )}
                 >
                   <Image
-                    className="h-8 w-8 rounded-full bg-gray-800"
+                    className="h-8 w-8 rounded-full bg-white"
                     src={SomeGuy}
                     alt=""
                   />
                   <span className="sr-only">Your profile</span>
-                  <span aria-hidden="true">Tom Cook</span>
+                  <span aria-hidden="true">Tom Cruise</span>
                 </Link>
               </li>
             </ul>
           </nav>
         </div>
       </div>
-    </div>
+    </React.Fragment>
   );
 }
