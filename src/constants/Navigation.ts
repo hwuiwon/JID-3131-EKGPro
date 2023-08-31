@@ -1,9 +1,4 @@
-import {
-  UserIcon,
-  ChartPieIcon,
-  HomeIcon,
-  ClockIcon,
-} from '@heroicons/react/24/outline';
+import { UserIcon, HomeIcon, ClockIcon } from '@heroicons/react/24/outline';
 
 export interface NavigationElementProperties {
   name: string;
@@ -34,12 +29,6 @@ export const getNavigationItems = (
     href: '/patient',
     icon: UserIcon,
     current: selected === Page.PATIENT,
-  },
-  {
-    name: 'Analysis',
-    href: '/analysis',
-    icon: ChartPieIcon,
-    current: selected === Page.ANALYSIS,
   },
   {
     name: 'Appointments',
