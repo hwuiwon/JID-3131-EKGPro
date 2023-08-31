@@ -1,3 +1,5 @@
+[Link to Jira Board](https://ekgpro.atlassian.net/jira/software/projects/EKG/boards/1)
+
 ## Getting Started
 # For backend
 Make sure you have the appropriate packages installed for the Django server by doing the following:
