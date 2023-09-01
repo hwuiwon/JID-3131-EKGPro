@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import Sidebar from '@/components/Common/Sidebar';
 import { Page } from '@/constants/Navigation';
@@ -18,6 +18,21 @@ const people = [
 ];
 
 export default function Patient() {
+  const inputReference = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
+        event.preventDefault();
+        inputReference.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   return (
     <React.Fragment>
       <Sidebar selectedPage={Page.PATIENT} />
@@ -33,7 +48,21 @@ export default function Patient() {
                 title, email and role.
               </p>
             </div>
-            <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+            <div className="mt-4 sm:ml-16 sm:mt-0 flex flex-row">
+              <div className="relative flex mr-4">
+                <input
+                  ref={inputReference}
+                  type="text"
+                  name="search"
+                  id="search"
+                  className="block w-full rounded-md border-0 py-1.5 pr-14 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                />
+                <div className="absolute inset-y-0 right-0 flex py-1.5 pr-1.5">
+                  <kbd className="inline-flex items-center rounded border border-gray-200 px-1 font-sans text-xs text-gray-400">
+                    ⌘K
+                  </kbd>
+                </div>
+              </div>
               <button
                 type="button"
                 className="block rounded-md bg-blue-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
