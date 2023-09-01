@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 
 import Sidebar from '@/components/Common/Sidebar';
+import UploadModal from '@/components/patient/UploadModal';
 import { Page } from '@/constants/Navigation';
 
 export default function PatientInfo({
@@ -10,6 +11,7 @@ export default function PatientInfo({
 }: {
   params: { patientId: string };
 }) {
+  const [openUploadModal, setOpenUploadModal] = useState<boolean>(false);
   const [dob, setDob] = useState<string>();
   const [age, setAge] = useState<number>();
   const [sex, setSex] = useState<string>('');
@@ -28,6 +30,7 @@ export default function PatientInfo({
   return (
     <React.Fragment>
       <Sidebar selectedPage={Page.PATIENT} />
+      <UploadModal open={openUploadModal} setOpen={setOpenUploadModal} />
       <div className="xl:pl-72 p-5">
         <div className="mx-auto px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:px-8">
           <div className="flex items-center space-x-5">
@@ -50,48 +53,68 @@ export default function PatientInfo({
           </div>
         </div>
 
-        <div className="mx-auto mt-8 grid grid-cols-1 gap-6 sm:px-6 lg:grid-flow-col-dense">
+        <div className="mx-auto mt-8 gap-6 sm:px-6">
           {/* Description list*/}
-          <section aria-labelledby="patient-information-title">
-            <div className="bg-white shadow sm:rounded-lg border border-gray-100">
-              <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
-                <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-6">
-                  <div className="sm:col-span-1">
-                    <dt className="text-sm font-medium text-gray-600">
-                      Patient ID
-                    </dt>
-                    <dd className="mt-1 text-sm text-gray-900">
-                      {params.patientId}
-                    </dd>
-                  </div>
-                  <div className="sm:col-span-1">
-                    <dt className="text-sm font-medium text-gray-600">
-                      Date of Birth
-                    </dt>
-                    <dd className="mt-1 text-sm text-gray-900">{dob}</dd>
-                  </div>
-                  <div className="sm:col-span-1">
-                    <dt className="text-sm font-medium text-gray-600">Age</dt>
-                    <dd className="mt-1 text-sm text-gray-900">{age}</dd>
-                  </div>
-                  <div className="sm:col-span-1">
-                    <dt className="text-sm font-medium text-gray-600">Sex</dt>
-                    <dd className="mt-1 text-sm text-gray-900">{sex}</dd>
-                  </div>
-                  <div className="sm:col-span-1">
-                    <dt className="text-sm font-medium text-gray-600">Phone</dt>
-                    <dd className="mt-1 text-sm text-gray-900">{phone}</dd>
-                  </div>
-                  <div className="sm:col-span-1">
-                    <dt className="text-sm font-medium text-gray-600">
-                      Doctor
-                    </dt>
-                    <dd className="mt-1 text-sm text-gray-900">{doctor}</dd>
-                  </div>
-                </dl>
-              </div>
+          <div className="bg-white shadow sm:rounded-lg border border-gray-100">
+            <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
+              <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-6">
+                <div className="sm:col-span-1">
+                  <dt className="text-sm font-medium text-gray-600">
+                    Patient ID
+                  </dt>
+                  <dd className="mt-1 text-sm text-gray-900">
+                    {params.patientId}
+                  </dd>
+                </div>
+                <div className="sm:col-span-1">
+                  <dt className="text-sm font-medium text-gray-600">
+                    Date of Birth
+                  </dt>
+                  <dd className="mt-1 text-sm text-gray-900">{dob}</dd>
+                </div>
+                <div className="sm:col-span-1">
+                  <dt className="text-sm font-medium text-gray-600">Age</dt>
+                  <dd className="mt-1 text-sm text-gray-900">{age}</dd>
+                </div>
+                <div className="sm:col-span-1">
+                  <dt className="text-sm font-medium text-gray-600">Sex</dt>
+                  <dd className="mt-1 text-sm text-gray-900">{sex}</dd>
+                </div>
+                <div className="sm:col-span-1">
+                  <dt className="text-sm font-medium text-gray-600">Phone</dt>
+                  <dd className="mt-1 text-sm text-gray-900">{phone}</dd>
+                </div>
+                <div className="sm:col-span-1">
+                  <dt className="text-sm font-medium text-gray-600">Doctor</dt>
+                  <dd className="mt-1 text-sm text-gray-900">{doctor}</dd>
+                </div>
+              </dl>
             </div>
-          </section>
+          </div>
+        </div>
+
+        <div className="mx-auto mt-8 grid grid-cols-1 lg:gap-6 sm:px-6 lg:grid-flow-col-dense lg:grid-cols-4 min-h-screen">
+          <div className="col-span-1">
+            <button
+              type="button"
+              className="w-full rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+            >
+              View All Segments
+            </button>
+            <button
+              type="button"
+              onClick={() => setOpenUploadModal(true)}
+              className="w-full mt-5 rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+            >
+              Upload EKG
+            </button>
+            <div className="w-full mt-5 rounded-md bg-white border border-gray-200 px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm">
+              Patient EKG Data
+            </div>
+          </div>
+          <div className="col-span-3">
+            <div className="w-full rounded-md bg-white shadow-sm border border-gray-200 h-5/6"></div>
+          </div>
         </div>
       </div>
     </React.Fragment>
