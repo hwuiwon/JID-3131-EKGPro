@@ -44,8 +44,8 @@ export default function Patient() {
                 Users
               </h1>
               <p className="mt-2 text-sm text-gray-700">
-                A list of all the users in your account including their name,
-                title, email and role.
+                A list of all the users in your organiztion including their
+                name, title, email and role.
               </p>
             </div>
             <div className="mt-4 sm:ml-16 sm:mt-0 flex flex-row">
@@ -76,7 +76,7 @@ export default function Patient() {
               <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                 <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
                   <table className="min-w-full divide-y divide-gray-300">
-                    <thead className="bg-gray-50">
+                    <thead className="bg-gray-300">
                       <tr>
                         <th
                           scope="col"
