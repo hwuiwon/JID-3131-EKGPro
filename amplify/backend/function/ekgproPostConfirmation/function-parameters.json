@@ -1,0 +1,14 @@
+{
+  "trigger": true,
+  "modules": ["add-to-group"],
+  "parentResource": "ekgpro",
+  "functionName": "ekgproPostConfirmation",
+  "resourceName": "ekgproPostConfirmation",
+  "parentStack": "auth",
+  "triggerEnvs": "[]",
+  "triggerDir": "/snapshot/amplify-cli/build/node_modules/@aws-amplify/amplify-category-auth/provider-utils/awscloudformation/triggers/PostConfirmation",
+  "triggerTemplate": "PostConfirmation.json.ejs",
+  "triggerEventPath": "PostConfirmation.event.json",
+  "roleName": "ekgproPostConfirmation",
+  "skipEdit": true
+}

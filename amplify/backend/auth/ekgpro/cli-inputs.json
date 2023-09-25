@@ -1,0 +1,43 @@
+{
+  "version": "1",
+  "cognitoConfig": {
+    "identityPoolName": "ekgpro_identity_pool",
+    "allowUnauthenticatedIdentities": true,
+    "resourceNameTruncated": "ekgpro955b10f1",
+    "userPoolName": "ekgpro_user_pool",
+    "autoVerifiedAttributes": ["email"],
+    "mfaConfiguration": "OFF",
+    "mfaTypes": ["SMS Text Message"],
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Your verification code",
+    "emailVerificationMessage": "Your verification code is {####}",
+    "defaultPasswordPolicy": false,
+    "passwordPolicyMinLength": 8,
+    "passwordPolicyCharacters": [],
+    "requiredAttributes": ["email", "name", "phone_number"],
+    "aliasAttributes": [],
+    "userpoolClientGenerateSecret": false,
+    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientWriteAttributes": ["email"],
+    "userpoolClientReadAttributes": ["email"],
+    "userpoolClientLambdaRole": "ekgpro955b10f1_userpoolclient_lambda_role",
+    "userpoolClientSetAttributes": false,
+    "sharedId": "955b10f1",
+    "resourceName": "ekgpro",
+    "authSelections": "identityPoolAndUserPool",
+    "useDefault": "manual",
+    "thirdPartyAuth": false,
+    "usernameAttributes": ["email"],
+    "userPoolGroups": true,
+    "adminQueries": false,
+    "triggers": {
+      "PostConfirmation": ["add-to-group"]
+    },
+    "hostedUI": false,
+    "userPoolGroupList": ["admin", "user"],
+    "serviceName": "Cognito",
+    "usernameCaseSensitive": false,
+    "useEnabledMfas": true
+  }
+}
