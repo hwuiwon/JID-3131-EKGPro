@@ -1,11 +1,13 @@
 import sys
 from http import HTTPStatus
 
+from api.v1 import user_router
 from exceptions import EKGException, EKGExceptionCode
 from fastapi import FastAPI, Request
 from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
 from loguru import logger
 
@@ -50,3 +52,21 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 @app.get("/")
 async def root() -> dict:
     return {"message": "API Working"}
+
+
+def ekg_openapi() -> dict:
+    if app.openapi_schema:
+        return app.openapi_schema
+
+    openapi_schema = get_openapi(
+        title="EKG Pro API",
+        version="1.0.0",
+        summary="Python backend of EKG Pro built with FastAPI",
+        routes=app.routes,
+    )
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
+
+app.openapi = ekg_openapi
+app.include_router(user_router, prefix="/v1")
