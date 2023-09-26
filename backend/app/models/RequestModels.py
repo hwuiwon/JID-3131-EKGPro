@@ -6,3 +6,4 @@ class RegisterUserRequest(BaseModel):
     email: str
     first_name: str
     last_name: str
+    org_id: str

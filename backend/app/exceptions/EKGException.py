@@ -4,7 +4,7 @@ from enum import Enum
 
 class EKGExceptionCode(Enum):
     BAD_REQUEST = 400
-    TEMP_PW_EMAIL_NOT_SENT = 4002
+    UNPROCESSABLE_ENTITY = 900
 
 
 class EKGException(Exception):
