@@ -1,4 +1,4 @@
-# prism-api
+# ekg-api
 
 EKG Backend implemented with FastAPI
 
@@ -7,7 +7,7 @@ EKG Backend implemented with FastAPI
 1. Create a new conda environment and install python 3.10
 
 ```bash
-conda create -n prism
+conda create -n ekg
 conda install python=3.11
 ```
 
@@ -42,7 +42,7 @@ touch .env
 
 ```bash
 cd app
-python -m uvicorn main:app --workers 4
+python -m uvicorn main:app --workers 2
 ```
 
 ## Before committing
