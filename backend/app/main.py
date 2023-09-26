@@ -34,7 +34,7 @@ app.add_middleware(
 
 
 @app.exception_handler(EKGException)
-async def prism_api_exception_handler(request: Request, e: EKGException):
+async def ekg_api_exception_handler(request: Request, e: EKGException):
     return JSONResponse(
         status_code=EKGExceptionCode.BAD_REQUEST.value,
         content={"code": e.code.value, "message": e.message},

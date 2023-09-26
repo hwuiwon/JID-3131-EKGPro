@@ -1,4 +1,4 @@
-"""Init file of Prism."""
+"""Init file of EKG Pro."""
 
 from pathlib import Path
 
