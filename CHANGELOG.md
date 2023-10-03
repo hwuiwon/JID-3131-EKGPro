@@ -1,3 +1,15 @@
+# v0.2.0
+
+## New Features
+- Sign-up / Sign-in Authentication
+- Refactored design and components
+
+## Bug-fixes
+- N/A
+
+## Known Issues
+- No backend integration for upload functionality
+
 # v0.1.0
 
 ## New Features
@@ -13,4 +25,3 @@
 ## Known Issues
 - No sign/auth functionality
 - No backend integration for upload functionality
-- 
