@@ -45,8 +45,8 @@ export default function Patient() {
               </h1>
               <p className="mt-2 text-sm text-gray-700">
                 A list of all of your patients and an overview of their
-                information. Click "View" to see detailed information and EKG
-                data.
+                information. Click the patient's name to see detailed
+                information and EKG data.
               </p>
             </div>
             <div className="mt-4 sm:ml-16 sm:mt-0 flex flex-row">
@@ -121,7 +121,12 @@ export default function Patient() {
                       {people.map(person => (
                         <tr key={person.id}>
                           <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                            {person.name}
+                            <Link
+                              href={`/patient/${person.id}`}
+                              className="text-blue-600 hover:text-blue-900"
+                            >
+                              {person.name}
+                            </Link>
                           </td>
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-600">
                             {person.id}
@@ -134,15 +139,6 @@ export default function Patient() {
                           </td>
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-600">
                             {person.contact}
-                          </td>
-                          <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                            <Link
-                              href={`/patient/${person.id}`}
-                              className="text-blue-600 hover:text-blue-900"
-                            >
-                              View
-                              <span className="sr-only">, {person.name}</span>
-                            </Link>
                           </td>
                         </tr>
                       ))}
