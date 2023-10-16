@@ -4,7 +4,7 @@ import boto3
 from exceptions import EKGIdentityException, EKGIdentityExceptionCode
 from loguru import logger
 
-from ..constants import COGNITO_USER_POOL_ID
+from constants.constants import COGNITO_USER_POOL_ID
 from .DynamoDBService import DynamoDBService
 
 
