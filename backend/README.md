@@ -26,6 +26,8 @@ poetry shell
 
 4. Setup pre-commit git hook
 
+might need to uninstall exisiting hooks
+
 ```bash
 pre-commit install
 ```
