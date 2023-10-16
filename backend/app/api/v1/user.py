@@ -59,7 +59,6 @@ async def register_user(
             organization_id=register_request.org_id,
         )
         # Add user to user table
-        print(register_request.id)
         dynamodb_service.register_user(
             user_id=register_request.id,
             email=register_request.email,
