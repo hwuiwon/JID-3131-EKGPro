@@ -1,6 +1,5 @@
 import boto3
 from botocore.exceptions import ClientError
-from botocore.config import Config
 from exceptions import EKGDBException, EKGDBExceptionCode
 from loguru import logger
 

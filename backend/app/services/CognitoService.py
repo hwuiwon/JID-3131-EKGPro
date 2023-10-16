@@ -1,7 +1,6 @@
 import secrets
 
 import boto3
-from botocore.config import Config
 from exceptions import EKGIdentityException, EKGIdentityExceptionCode
 from loguru import logger
 
