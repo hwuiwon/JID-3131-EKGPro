@@ -4,7 +4,6 @@ import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 
 import Sidebar from '@/components/Common/Sidebar';
-import UploadModal from '@/components/patient/UploadModal';
 import { Page } from '@/constants/Navigation';
 
 
