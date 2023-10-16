@@ -1,10 +1,11 @@
 import secrets
 
 import boto3
+from botocore.config import Config
 from exceptions import EKGIdentityException, EKGIdentityExceptionCode
 from loguru import logger
 
-from constants.constants import COGNITO_USER_POOL_ID
+from constants.constants import COGNITO_USER_POOL_ID, AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY, REGION
 from .DynamoDBService import DynamoDBService
 
 
@@ -12,7 +13,7 @@ class CognitoService:
     """https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cognito-idp.html"""
 
     def __init__(self):
-        self.client = boto3.client("cognito-idp")
+        self.client = boto3.client("cognito-idp", aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_ACCESS_KEY, region_name=REGION)
 
     def create_user(
         self,
@@ -22,7 +23,7 @@ class CognitoService:
         last_name: str,
         organization_id: str,
     ) -> None:
-        random_password = secrets.token_urlsafe(15) + "!"
+        random_password = secrets.token_urlsafe(15) + "!2"
         logger.info(
             "user_id={}, user_email={}, name={}, organization_id={}, random_password={}",
             user_id,
@@ -40,8 +41,8 @@ class CognitoService:
                     {"Name": "email", "Value": user_email},
                     {"Name": "given_name", "Value": first_name},
                     {"Name": "family_name", "Value": last_name},
-                    {"Name": "custom:organization_id", "Value": organization_id},
-                    {"Name": "custom:user_id", "Value": user_id},
+                    # {"Name": "custom:organization_id", "Value": organization_id},
+                    # {"Name": "custom:user_id", "Value": user_id},
                 ],
                 TemporaryPassword=random_password,
                 MessageAction="SUPPRESS",
