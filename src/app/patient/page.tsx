@@ -41,11 +41,10 @@ export default function Patient() {
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">
               <h1 className="text-base font-semibold leading-6 text-gray-900">
-                Users
+                Patients
               </h1>
               <p className="mt-2 text-sm text-gray-700">
-                A list of all the users in your organiztion including their
-                name, title, email and role.
+                A list of all of your patients and an overview of their information. Click "View" to see detailed information and EKG data.
               </p>
             </div>
             <div className="mt-4 sm:ml-16 sm:mt-0 flex flex-row">
@@ -67,7 +66,7 @@ export default function Patient() {
                 type="button"
                 className="block rounded-md bg-blue-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
               >
-                Add user
+                Add Patient
               </button>
             </div>
           </div>
