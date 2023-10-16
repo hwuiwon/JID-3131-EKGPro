@@ -40,11 +40,10 @@ export default function Appointment() {
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">
               <h1 className="text-base font-semibold leading-6 text-gray-900">
-                Users
+                Appointments
               </h1>
               <p className="mt-2 text-sm text-gray-700">
-                A list of all the users in your organization including their
-                name, title, email and role.
+                A list of all of your upcoming appointments.
               </p>
             </div>
             <div className="mt-4 sm:ml-16 sm:mt-0 flex flex-row">
@@ -66,7 +65,7 @@ export default function Appointment() {
                 type="button"
                 className="block rounded-md bg-blue-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
               >
-                Add user
+                Add Appointment
               </button>
             </div>
           </div>
@@ -81,7 +80,13 @@ export default function Appointment() {
                           scope="col"
                           className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                         >
-                          Name
+                          ID
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                        >
+                          Date & Time
                         </th>
                         <th
                           scope="col"
@@ -93,19 +98,7 @@ export default function Appointment() {
                           scope="col"
                           className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                         >
-                          Last Visit
-                        </th>
-                        <th
-                          scope="col"
-                          className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                        >
-                          Doctor
-                        </th>
-                        <th
-                          scope="col"
-                          className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                        >
-                          Contact
+                          Patient Name
                         </th>
                         <th
                           scope="col"
