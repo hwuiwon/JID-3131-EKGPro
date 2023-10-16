@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
 
-import Sidebar from '@/components/Common/Sidebar';
 import AddAppointmentModal from '@/components/appointment/AddAppointmentModal';
+import Sidebar from '@/components/Common/Sidebar';
 import { Page } from '@/constants/Navigation';
 
 const appointmentDummy = [
@@ -38,11 +38,9 @@ export default function Appointment() {
   };
 
   const sortAppointments = (a, b) => {
-    if (sortOrder === 'asc') {
-      return a.date_time.localeCompare(b.date_time);
-    } else {
-      return b.date_time.localeCompare(a.date_time);
-    }
+    return sortOrder === 'asc'
+      ? a.date_time.localeCompare(b.date_time)
+      : b.date_time.localeCompare(a.date_time);
   };
 
   useEffect(() => {

@@ -7,7 +7,10 @@ interface UploadModalProperties {
   setOpen: (value: boolean) => void;
 }
 
-export default function AddAppointmentModal({ open, setOpen }: UploadModalProperties) {
+export default function AddAppointmentModal({
+  open,
+  setOpen,
+}: UploadModalProperties) {
   const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
   const [alertMessage, setAlertMessage] = useState('');
 
@@ -54,73 +57,69 @@ export default function AddAppointmentModal({ open, setOpen }: UploadModalProper
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
                 <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
-                <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-                <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                    Add a new appointment
-                </h2>
-                </div>
-
-                <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className="space-y-6" action="#" method="POST">
-                    <div>
-                    <div className="flex items-center justify-between">
-                        <label
-                        htmlFor="patient"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                        >
-                        Patient Name
-                        </label>
-                    </div>
-                    <div className="mt-2">
-                        <select
-                        id="patient"
-                        name="patient"
-                        required
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-                        >
-                            <option value="">Select a patient</option>
-                            <option value="patient1">Leslie Alexander</option>
-                        </select>
-                    </div>
-                    </div>
-                    <div>
-                    <label
-                        htmlFor="datetime"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                        Date and Time
-                    </label>
-                    <div className="mt-2">
-                        <input
-                        id="date"
-                        name="date"
-                        type="date"
-                        autoComplete="date"
-                        required
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-                        />
-                    </div>
-                    <div className="mt-2">
-                        <input
-                        id="time"
-                        name="time"
-                        type="time"
-                        autoComplete="time"
-                        required
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-                        />
-                    </div>
+                  <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+                    <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+                      <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                        Add a new appointment
+                      </h2>
                     </div>
 
+                    <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+                      <form className="space-y-6" action="#" method="POST">
+                        <div>
+                          <div className="flex items-center justify-between">
+                            <label
+                              htmlFor="patient"
+                              className="block text-sm font-medium leading-6 text-gray-900"
+                            >
+                              Patient Name
+                            </label>
+                          </div>
+                          <div className="mt-2">
+                            <select
+                              id="patient"
+                              name="patient"
+                              required
+                              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                            >
+                              <option value="">Select a patient</option>
+                              <option value="patient1">Leslie Alexander</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div>
+                          <label
+                            htmlFor="datetime"
+                            className="block text-sm font-medium leading-6 text-gray-900"
+                          >
+                            Date and Time
+                          </label>
+                          <div className="mt-2">
+                            <input
+                              id="date"
+                              name="date"
+                              type="date"
+                              autoComplete="date"
+                              required
+                              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                            />
+                          </div>
+                          <div className="mt-2">
+                            <input
+                              id="time"
+                              name="time"
+                              type="time"
+                              autoComplete="time"
+                              required
+                              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                            />
+                          </div>
+                        </div>
 
-                    <div>
-                    
+                        <div></div>
+                      </form>
                     </div>
-                </form>
-
-                </div>
-            </div>
+                  </div>
                   <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                     <button
                       type="button"
