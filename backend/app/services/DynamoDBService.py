@@ -3,6 +3,7 @@ from botocore.exceptions import ClientError
 from exceptions import EKGDBException, EKGDBExceptionCode
 from loguru import logger
 
+from constants.constants import AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY, REGION
 
 class DynamoDBService:
     """
@@ -11,8 +12,14 @@ class DynamoDBService:
     """
 
     def __init__(self):
-        self.client = boto3.client("dynamodb")
-        self.resource = boto3.resource("dynamodb")
+        self.client = boto3.client("dynamodb",
+            region_name=REGION,
+            aws_access_key_id=AWS_ACCESS_KEY,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+        self.resource = boto3.resource("dynamodb",
+            region_name=REGION,
+            aws_access_key_id=AWS_ACCESS_KEY,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
 
     def put_item(self, table_name: str, item: dict) -> None:
         try:
@@ -53,3 +60,13 @@ class DynamoDBService:
             )
 
         return response
+
+    def register_user(
+        self,
+        user_id=str,
+        email=str,
+        name=str,
+        organization_id=str,
+    ) -> None:
+        table_name = 'users'
+        self.put_item(table_name=table_name, item={'id': {'S': user_id}, 'email': {'S': email}, 'name': {'S': name}, 'organization_id': {'S': organization_id}})
