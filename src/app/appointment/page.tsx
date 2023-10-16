@@ -9,9 +9,9 @@ import { Page } from '@/constants/Navigation';
 
 const appointmentDummy = [
   {
-    id: '432',
-    date_time: '11/11/2024 08:00AM',
     patient_name: 'Leslie Alexander',
+    date_time: '11/11/2024 08:00AM',
+    id: '432',
     patient_id: '1984729182',
     status: 'confirmed', // Add the "status" property
   },
@@ -120,6 +120,7 @@ export default function Appointment() {
                 >
                   <option value="">All Status</option>
                   <option value="confirmed">Confirmed</option>
+
                   <option value="pending">Pending</option>
                   <option value="canceled">Canceled</option>
                 </select>
