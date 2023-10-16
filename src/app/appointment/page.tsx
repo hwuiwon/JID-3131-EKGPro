@@ -23,9 +23,6 @@ const appointmentDummy = [
 
 export default function Appointment() {
   const [openAddApptModal, setOpenAddApptModal] = useState<boolean>(false);
-  const [patient, setPatient] = useState<string>('');
-  const [date, setDate] = useState<string>('');
-  const [time, setTime] = useState<string>('');
 
   // Additional features
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
@@ -42,13 +39,6 @@ export default function Appointment() {
       ? a.date_time.localeCompare(b.date_time)
       : b.date_time.localeCompare(a.date_time);
   };
-
-  useEffect(() => {
-    // fetch information using patient id
-    setPatient('Leslie Alexander');
-    setDate('11/11/2024');
-    setTime('08:00AM');
-  }, []);
 
   const inputReference = useRef<HTMLInputElement>(null);
 
