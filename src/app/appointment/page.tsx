@@ -1,9 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import Sidebar from '@/components/Common/Sidebar';
+import AddAppointmentModal from '@/components/appointment/AddAppointmentModal';
 import { Page } from '@/constants/Navigation';
 
 const appointmentDummy = [
@@ -17,6 +18,21 @@ const appointmentDummy = [
 ];
 
 export default function Appointment() {
+
+  {
+  const [openAddApptModal, setOpenAddApptModal] = useState<boolean>(false);
+  const [patient, setPatient] = useState<string>('');
+  const [date, setDate] = useState<string>('');
+  const [time, setTime] = useState<string>('');
+
+
+  useEffect(() => {
+    // fetch information using patient id
+    setPatient('Leslie Alexander');
+    setDate('11/11/2024');
+    setTime('08:00AM');
+  }, []);
+
   const inputReference = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -35,6 +51,7 @@ export default function Appointment() {
   return (
     <React.Fragment>
       <Sidebar selectedPage={Page.APPOINTMENT} />
+      <AddAppointmentModal open={openAddApptModal} setOpen={setOpenAddApptModal} />
       <div className="xl:pl-72 py-5">
         <div className="px-4 sm:px-6 lg:px-8">
           <div className="sm:flex sm:items-center">
@@ -63,6 +80,7 @@ export default function Appointment() {
               </div>
               <button
                 type="button"
+                onClick={() => setOpenAddApptModal(true)}
                 className="block rounded-md bg-blue-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
               >
                 Add Appointment
@@ -144,4 +162,5 @@ export default function Appointment() {
       </div>
     </React.Fragment>
   );
+}
 }
