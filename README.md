@@ -37,10 +37,3 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Backend
 
 Refer to the README in the /backend/ folder
-
-Make sure you have the appropriate packages installed for the Django server by doing the following:
-
-```bash
-cd backend
-pip install -r requirements.txt
-```
