@@ -1,10 +1,19 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 
 import EKGProLogo from '@/images/logo/logo_black.svg';
 
 export default function Login() {
+  const [email, setEmail] = useState('');
+  const [pass, setPass] = useState('');
+
+  const onSubmit = () => {
+    console.log('Submitting: ' + email + ' ' + pass);
+  };
+
   return (
     <React.Fragment>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -38,6 +47,8 @@ export default function Login() {
                   autoComplete="email"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                  onChange={error => setEmail(error.target.value)}
+                  value={email}
                 />
               </div>
             </div>
@@ -67,6 +78,8 @@ export default function Login() {
                   autoComplete="current-password"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                  onChange={error => setPass(error.target.value)}
+                  value={pass}
                 />
               </div>
             </div>
@@ -75,6 +88,7 @@ export default function Login() {
               <button
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                onClick={onSubmit}
               >
                 Sign in
               </button>
