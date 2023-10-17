@@ -11,6 +11,24 @@ export default function Register() {
   const [pass, setPass] = useState('');
   const onSubmit = () => {
     console.log('Submitting: ' + email + ' ' + pass);
+    fetch('http://127.0.0.1:8000/v1/user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: 'string',
+        email: email,
+        password: pass,
+        first_name: 'string',
+        last_name: 'string',
+        org_id: 'Piedmont',
+      }),
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        console.log(responseData);
+      });
   };
 
   return (
