@@ -7,6 +7,7 @@ import Sidebar from '@/components/Common/Sidebar';
 import UploadModal from '@/components/patient/UploadModal';
 import { Page } from '@/constants/Navigation';
 
+// TODO: Dynamic load from ../page.tsx ?
 const projects = [
   {
     id: 1,
@@ -46,6 +47,7 @@ export default function PatientInfo({
   const [phone, setPhone] = useState<string>('');
   const [doctor, setDoctor] = useState<string>('');
 
+  // Map between an EKG and its selected state.
   const [toggleEKGs, setToggleEKGs] = useState<
     { id: number; selected: boolean }[]
   >(projects.map(project => ({ id: project.id, selected: false })));
@@ -53,8 +55,10 @@ export default function PatientInfo({
     const newToggleState = toggleEKGs.map(
       (project: { id: number; selected: boolean }) => {
         if (project.id === id) {
+          // Return the opposite of current selection state
           return (project = { id: project.id, selected: !project.selected });
         }
+        // Return self if no change
         return project;
       }
     );
@@ -176,6 +180,7 @@ export default function PatientInfo({
                         {project.name}
                       </div>
                     </button>
+                    {/* Displays whether EKG is selected. */}
                     {toggleEKGs
                       .filter(p => p.id === project.id)
                       .some(p => p.selected) && <p>Selected</p>}
