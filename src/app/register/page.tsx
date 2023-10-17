@@ -9,7 +9,15 @@ import EKGProLogo from '@/images/logo/logo_black.svg';
 export default function Register() {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
+  const [confirmPass, setConfirmPass] = useState('');
+  const [passwordMismatch, setPasswordMismatch] = useState('');
   const onSubmit = () => {
+    // eslint-disable-next-line security/detect-possible-timing-attacks
+    if (pass !== confirmPass) {
+      setPasswordMismatch(true);
+      return;
+    }
+    setPasswordMismatch(false);
     console.log('Submitting: ' + email + ' ' + pass);
     fetch('http://127.0.0.1:8000/v1/user', {
       method: 'POST',
@@ -92,8 +100,6 @@ export default function Register() {
                 />
               </div>
             </div>
-
-            {/* Additional Password Input Field */}
             <div>
               <div className="flex items-center justify-between">
                 <label
@@ -111,11 +117,16 @@ export default function Register() {
                   autoComplete="current-password"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                  onChange={error => setConfirmPass(error.target.value)}
+                  value={confirmPass}
                 />
               </div>
             </div>
-            {/* End of Additional Password Input Field */}
-
+            {passwordMismatch && (
+              <div className="block w-full rounded-md border-0 py-0 text-red-600 text-sm sm:text-sm sm:leading-6">
+                Passwords don't match
+              </div>
+            )}
             <div>
               <button
                 type="submit"
