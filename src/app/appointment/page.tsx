@@ -71,7 +71,7 @@ export default function Appointment() {
                 Appointments
               </h1>
               <p className="mt-2 text-sm text-gray-700">
-                A list of all your upcoming appointments.
+                A list of all your {filteredAppointments.length} appointments.
               </p>
             </div>
             <div className="mt-4 sm:ml-16 sm:mt-0 flex flex-row">
