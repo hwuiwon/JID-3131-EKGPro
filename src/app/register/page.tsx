@@ -7,9 +7,20 @@ import React, { useState } from 'react';
 import EKGProLogo from '@/images/logo/logo_black.svg';
 
 export default function Register() {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [organization, setOrganization] = useState('');
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
+  const [confirmPass, setConfirmPass] = useState('');
+  const [passwordMismatch, setPasswordMismatch] = useState('');
   const onSubmit = () => {
+    // eslint-disable-next-line security/detect-possible-timing-attacks
+    if (pass !== confirmPass) {
+      setPasswordMismatch(true);
+      return;
+    }
+    setPasswordMismatch(false);
     console.log('Submitting: ' + email + ' ' + pass);
     fetch('http://127.0.0.1:8000/v1/user', {
       method: 'POST',
@@ -49,6 +60,66 @@ export default function Register() {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" action="#" method="POST">
+            <div>
+              <label
+                htmlFor="first_name"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                First name
+              </label>
+              <div className="mt-2">
+                <input
+                  id="first_name"
+                  name="first_name"
+                  type="text"
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                  onChange={error => setFirstName(error.target.value)}
+                  value={firstName}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                htmlFor="last_name"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Last name
+              </label>
+              <div className="mt-2">
+                <input
+                  id="last_name"
+                  name="last_name"
+                  type="text"
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                  onChange={error => setLastName(error.target.value)}
+                  value={lastName}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                htmlFor="organization"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Organization
+              </label>
+              <div className="mt-2">
+                <input
+                  id="organization"
+                  name="organization"
+                  type="text"
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                  onChange={error => setOrganization(error.target.value)}
+                  value={organization}
+                />
+              </div>
+            </div>
+
             <div>
               <label
                 htmlFor="email"
@@ -92,8 +163,6 @@ export default function Register() {
                 />
               </div>
             </div>
-
-            {/* Additional Password Input Field */}
             <div>
               <div className="flex items-center justify-between">
                 <label
@@ -111,11 +180,16 @@ export default function Register() {
                   autoComplete="current-password"
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                  onChange={error => setConfirmPass(error.target.value)}
+                  value={confirmPass}
                 />
               </div>
             </div>
-            {/* End of Additional Password Input Field */}
-
+            {passwordMismatch && (
+              <div className="block w-full rounded-md border-0 py-0 text-red-600 text-sm sm:text-sm sm:leading-6">
+                Passwords don't match
+              </div>
+            )}
             <div>
               <button
                 type="submit"
