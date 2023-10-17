@@ -12,13 +12,13 @@ const projects = [
   {
     id: 1,
     name: '08/01/2023',
-    href: '#',
+    href: '/_N_E/src/app/images/sample/ekg/fullEKG1.jpeg',
     bgColor: 'bg-pink-600',
   },
   {
     id: 2,
     name: '07/31/2023',
-    href: '#',
+    href: '/_N_E/src/app/images/sample/ekg/fullEKG2.jpeg',
     bgColor: 'bg-purple-600',
   },
   {
@@ -204,9 +204,10 @@ export default function PatientInfo({
             <div className="w-full flex flex-col rounded-md bg-white shadow-md border border-gray-200 h-5/6">
               {/* Will be image wrapper at some point for manipulation */}
               {projects.map(project => (
+                // Dynamic image source.
                 toggleEKGs
                   .filter(p => p.id === project.id)
-                  .some(p => p.selected) && <img src="/_next/static/media/guy.f7047240.jpeg" className='mx-auto py-10 px-10 w-full h-full object-cover'></img>
+                  .some(p => p.selected) && <img src={project.href} className='mx-auto py-10 px-10 w-full h-full object-cover'></img>
               ))}
             </div>
           </div>
