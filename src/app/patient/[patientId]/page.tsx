@@ -168,7 +168,10 @@ export default function PatientInfo({
                       )}
                       onClick={() => handleToggleEKGs(project.id)}
                     />
-                    <button className="flex flex-1 items-center truncate rounded-r-md border-b border-r border-t border-gray-200 bg-white hover:bg-gray-100">
+                    <button
+                      className="flex flex-1 items-center truncate rounded-r-md border-b border-r border-t border-gray-200 bg-white hover:bg-gray-100"
+                      onClick={() => handleToggleEKGs(project.id)}
+                    >
                       <div className="flex-1 truncate px-4 py-2 text-sm font-medium text-left">
                         {project.name}
                       </div>
