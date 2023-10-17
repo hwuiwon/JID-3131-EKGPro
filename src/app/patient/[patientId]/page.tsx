@@ -201,9 +201,13 @@ export default function PatientInfo({
             </div>
           </div>
           <div className="col-span-3">
-            <div className="w-full rounded-md bg-white shadow-md border border-gray-200 h-5/6">
+            <div className="w-full flex flex-col rounded-md bg-white shadow-md border border-gray-200 h-5/6">
               {/* Will be image wrapper at some point for manipulation */}
-              <img src="/_next/static/media/guy.f7047240.jpeg" className='mx-auto py-10 px-10 w-full h-full object-cover'></img>
+              {projects.map(project => (
+                toggleEKGs
+                  .filter(p => p.id === project.id)
+                  .some(p => p.selected) && <img src="/_next/static/media/guy.f7047240.jpeg" className='mx-auto py-10 px-10 w-full h-full object-cover'></img>
+              ))}
             </div>
           </div>
         </div>
