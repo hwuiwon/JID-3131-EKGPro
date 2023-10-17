@@ -169,22 +169,28 @@ export default function PatientInfo({
                     <button
                       className={clsx(
                         project.bgColor,
-                        'flex w-12 flex-shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white'
+                        'flex w-12 flex-shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white',
+                        // Displays whether EKG is selected.
+                        toggleEKGs
+                          .filter(p => p.id === project.id)
+                          .some(p => p.selected) ? 'border-y-2 border-l-2 border-green-400' : ''
                       )}
                       onClick={() => handleToggleEKGs(project.id)}
                     />
                     <button
-                      className="flex flex-1 items-center truncate rounded-r-md border-b border-r border-t border-gray-200 bg-white hover:bg-gray-100"
+                      className={clsx(
+                        "flex flex-1 items-center truncate rounded-r-md bg-white hover:bg-gray-100",
+                        // Displays whether EKG is selected.
+                        toggleEKGs
+                          .filter(p => p.id === project.id)
+                          .some(p => p.selected) ? 'border-y-2 border-r-8 border-green-400' : 'border-y border-r border-gray-200'
+                      )}
                       onClick={() => handleToggleEKGs(project.id)}
                     >
                       <div className="flex-1 truncate px-4 py-2 text-sm font-medium text-left">
                         {project.name}
                       </div>
                     </button>
-                    {/* Displays whether EKG is selected. */}
-                    {toggleEKGs
-                      .filter(p => p.id === project.id)
-                      .some(p => p.selected) && <p>Selected</p>}
                   </li>
                 ))}
               </ul>
@@ -195,7 +201,10 @@ export default function PatientInfo({
             </div>
           </div>
           <div className="col-span-3">
-            <div className="w-full rounded-md bg-white shadow-md border border-gray-200 h-5/6"></div>
+            <div className="w-full rounded-md bg-white shadow-md border border-gray-200 h-5/6">
+              {/* Will be image wrapper at some point for manipulation */}
+              <img src="/_next/static/media/guy.f7047240.jpeg" className='mx-auto py-10 px-10 w-full h-full object-cover'></img>
+            </div>
           </div>
         </div>
       </div>

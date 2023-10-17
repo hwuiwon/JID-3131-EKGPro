@@ -29,7 +29,7 @@ export default function Patient() {
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
   };
 
-  const sortAppointments = (str1, str2) => {
+  const sortAppointments = (str1: string, str2: string) => {
     return sortOrder === 'asc'
       ? str1.localeCompare(str2)
       : str2.localeCompare(str1);

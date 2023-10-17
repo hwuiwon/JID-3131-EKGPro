@@ -34,7 +34,7 @@ export default function Appointment() {
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
   };
 
-  const sortAppointments = (a, b) => {
+  const sortAppointments = (a: {patient_name: string, date_time: string, id: string, patient_id: string, status: string}, b: {patient_name: string, date_time: string, id: string, patient_id: string, status: string}) => {
     return sortOrder === 'asc'
       ? a.date_time.localeCompare(b.date_time)
       : b.date_time.localeCompare(a.date_time);
