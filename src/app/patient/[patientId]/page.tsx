@@ -169,22 +169,28 @@ export default function PatientInfo({
                     <button
                       className={clsx(
                         project.bgColor,
-                        'flex w-12 flex-shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white'
+                        'flex w-12 flex-shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white',
+                        // Displays whether EKG is selected.
+                        toggleEKGs
+                          .filter(p => p.id === project.id)
+                          .some(p => p.selected) ? 'border-y-2 border-l-2 border-green-400' : ''
                       )}
                       onClick={() => handleToggleEKGs(project.id)}
                     />
                     <button
-                      className="flex flex-1 items-center truncate rounded-r-md border-b border-r border-t border-gray-200 bg-white hover:bg-gray-100"
+                      className={clsx(
+                        "flex flex-1 items-center truncate rounded-r-md bg-white hover:bg-gray-100",
+                        // Displays whether EKG is selected.
+                        toggleEKGs
+                          .filter(p => p.id === project.id)
+                          .some(p => p.selected) ? 'border-y-2 border-r-8 border-green-400' : 'border-y border-r border-gray-200'
+                      )}
                       onClick={() => handleToggleEKGs(project.id)}
                     >
                       <div className="flex-1 truncate px-4 py-2 text-sm font-medium text-left">
                         {project.name}
                       </div>
                     </button>
-                    {/* Displays whether EKG is selected. */}
-                    {toggleEKGs
-                      .filter(p => p.id === project.id)
-                      .some(p => p.selected) && <p>Selected</p>}
                   </li>
                 ))}
               </ul>
