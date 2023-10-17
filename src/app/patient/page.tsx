@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import Sidebar from '@/components/Common/Sidebar';
 import { Page } from '@/constants/Navigation';
@@ -18,6 +18,23 @@ const people = [
 ];
 
 export default function Patient() {
+  const [openAddApptModal, setOpenAddApptModal] = useState<boolean>(false);
+
+  // Additional features
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [filteredAppointments, setFilteredAppointments] = useState(people);
+  const [statusFilter, setStatusFilter] = useState<string | null>(null);
+
+  const toggleSortOrder = () => {
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+  };
+
+  const sortAppointments = (str1, str2) => {
+    return sortOrder === 'asc'
+      ? str1.localeCompare(str2)
+      : str2.localeCompare(str1);
+  };
+
   const inputReference = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
