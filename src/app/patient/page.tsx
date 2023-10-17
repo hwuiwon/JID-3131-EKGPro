@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import Sidebar from '@/components/Common/Sidebar';
 import { Page } from '@/constants/Navigation';
@@ -18,6 +18,23 @@ const people = [
 ];
 
 export default function Patient() {
+  const [openAddApptModal, setOpenAddApptModal] = useState<boolean>(false);
+
+  // Additional features
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [filteredAppointments, setFilteredAppointments] = useState(people);
+  const [statusFilter, setStatusFilter] = useState<string | null>(null);
+
+  const toggleSortOrder = () => {
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+  };
+
+  const sortAppointments = (str1, str2) => {
+    return sortOrder === 'asc'
+      ? str1.localeCompare(str2)
+      : str2.localeCompare(str1);
+  };
+
   const inputReference = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -41,11 +58,12 @@ export default function Patient() {
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto">
               <h1 className="text-base font-semibold leading-6 text-gray-900">
-                Users
+                Patients
               </h1>
               <p className="mt-2 text-sm text-gray-700">
-                A list of all the users in your organiztion including their
-                name, title, email and role.
+                A list of all of your patients and an overview of their
+                information. Click the patient's name to see detailed
+                information and EKG data.
               </p>
             </div>
             <div className="mt-4 sm:ml-16 sm:mt-0 flex flex-row">
@@ -67,7 +85,7 @@ export default function Patient() {
                 type="button"
                 className="block rounded-md bg-blue-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
               >
-                Add user
+                Add Patient
               </button>
             </div>
           </div>
@@ -120,7 +138,12 @@ export default function Patient() {
                       {people.map(person => (
                         <tr key={person.id}>
                           <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                            {person.name}
+                            <Link
+                              href={`/patient/${person.id}`}
+                              className="text-blue-600 hover:text-blue-900"
+                            >
+                              {person.name}
+                            </Link>
                           </td>
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-600">
                             {person.id}
@@ -133,15 +156,6 @@ export default function Patient() {
                           </td>
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-600">
                             {person.contact}
-                          </td>
-                          <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                            <Link
-                              href={`/patient/${person.id}`}
-                              className="text-blue-600 hover:text-blue-900"
-                            >
-                              View
-                              <span className="sr-only">, {person.name}</span>
-                            </Link>
                           </td>
                         </tr>
                       ))}

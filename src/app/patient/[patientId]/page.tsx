@@ -47,6 +47,7 @@ export default function PatientInfo({
   const [phone, setPhone] = useState<string>('');
   const [doctor, setDoctor] = useState<string>('');
 
+
   // Map between an EKG and its selected state.
   const [toggleEKGs, setToggleEKGs] = useState<
     { id: number; selected: boolean }[]
