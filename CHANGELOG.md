@@ -1,7 +1,7 @@
 # v0.3.0
 
 ## New Features
-- backend was been refactored from Django to FastAPI
+- Backend was been refactored from Django to FastAPI
 - Added appointment page, which contains a list of appointments, their status, and filtering options
 - Added states to register and login screens
 - Implemented password validation
