@@ -38,6 +38,7 @@ async def register_user(
         or not register_request.first_name
         or not register_request.last_name
         or not register_request.org_id
+        or not register_request.password
     ):
         raise EKGException(
             code=EKGExceptionCode.BAD_REQUEST,
@@ -57,6 +58,7 @@ async def register_user(
             first_name=register_request.first_name,
             last_name=register_request.last_name,
             organization_id=register_request.org_id,
+            user_password=register_request.password,
         )
         # Add user to user table
         dynamodb_service.register_user(

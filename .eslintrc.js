@@ -169,8 +169,10 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'react/no-unescaped-entities': 'off',
     'unicorn/no-abusive-eslint-disable': 'off',
+    'unicorn/prevent-abbreviations': 'off',
     'unicorn/filename-case': 'off',
     'unicorn/no-useless-undefined': 'off',
+    'unicorn/no-null': 'off',
     '@typescript-eslint/no-unused-vars': [
       'warn',
       {

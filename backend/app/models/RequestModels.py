@@ -7,3 +7,4 @@ class RegisterUserRequest(BaseModel):
     first_name: str
     last_name: str
     org_id: str
+    password: str

@@ -1,10 +1,15 @@
-import secrets
+# import secrets
 
 import boto3
+from constants.constants import (
+    AWS_ACCESS_KEY,
+    AWS_SECRET_ACCESS_KEY,
+    COGNITO_USER_POOL_ID,
+    REGION,
+)
 from exceptions import EKGIdentityException, EKGIdentityExceptionCode
 from loguru import logger
 
-from constants.constants import COGNITO_USER_POOL_ID, AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY, REGION
 from .DynamoDBService import DynamoDBService
 
 
@@ -12,7 +17,12 @@ class CognitoService:
     """https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/cognito-idp.html"""
 
     def __init__(self):
-        self.client = boto3.client("cognito-idp", aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_ACCESS_KEY, region_name=REGION)
+        self.client = boto3.client(
+            "cognito-idp",
+            aws_access_key_id=AWS_ACCESS_KEY,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+            region_name=REGION,
+        )
 
     def create_user(
         self,
@@ -21,15 +31,16 @@ class CognitoService:
         first_name: str,
         last_name: str,
         organization_id: str,
+        user_password: str,
     ) -> None:
-        random_password = secrets.token_urlsafe(15) + "!2"
+        # random_password = secrets.token_urlsafe(15) + "!2"
         logger.info(
             "user_id={}, user_email={}, name={}, organization_id={}, random_password={}",
             user_id,
             user_email,
             first_name + " " + last_name,
             organization_id,
-            random_password,
+            user_password,
         )
 
         try:
@@ -43,7 +54,7 @@ class CognitoService:
                     # {"Name": "custom:organization_id", "Value": organization_id},
                     # {"Name": "custom:user_id", "Value": user_id},
                 ],
-                TemporaryPassword=random_password,
+                TemporaryPassword=user_password,
                 MessageAction="SUPPRESS",
                 DesiredDeliveryMediums=["EMAIL"],
             )

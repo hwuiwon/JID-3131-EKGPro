@@ -3,15 +3,15 @@
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
 
-import Sidebar from '@/components/Common/Sidebar';
 import AddAppointmentModal from '@/components/appointment/AddAppointmentModal';
+import Sidebar from '@/components/Common/Sidebar';
 import { Page } from '@/constants/Navigation';
 
 const appointmentDummy = [
   {
-    id: '432',
-    date_time: '11/11/2024 08:00AM',
     patient_name: 'Leslie Alexander',
+    date_time: '11/11/2024 08:00AM',
+    id: '432',
     patient_id: '1984729182',
     status: 'confirmed', // Add the "status" property
   },
@@ -23,9 +23,7 @@ const appointmentDummy = [
 
 export default function Appointment() {
   const [openAddApptModal, setOpenAddApptModal] = useState<boolean>(false);
-  const [patient, setPatient] = useState<string>('');
-  const [date, setDate] = useState<string>('');
-  const [time, setTime] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Additional features
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
@@ -38,19 +36,10 @@ export default function Appointment() {
   };
 
   const sortAppointments = (a, b) => {
-    if (sortOrder === 'asc') {
-      return a.date_time.localeCompare(b.date_time);
-    } else {
-      return b.date_time.localeCompare(a.date_time);
-    }
+    return sortOrder === 'asc'
+      ? a.date_time.localeCompare(b.date_time)
+      : b.date_time.localeCompare(a.date_time);
   };
-
-  useEffect(() => {
-    // fetch information using patient id
-    setPatient('Leslie Alexander');
-    setDate('11/11/2024');
-    setTime('08:00AM');
-  }, []);
 
   const inputReference = useRef<HTMLInputElement>(null);
 
@@ -82,7 +71,7 @@ export default function Appointment() {
                 Appointments
               </h1>
               <p className="mt-2 text-sm text-gray-700">
-                A list of all your upcoming appointments.
+                A list of all your {filteredAppointments.length} appointments.
               </p>
             </div>
             <div className="mt-4 sm:ml-16 sm:mt-0 flex flex-row">
@@ -92,6 +81,8 @@ export default function Appointment() {
                   type="text"
                   name="search"
                   id="search"
+                  value={searchQuery} // Add this line
+                  onChange={e => setSearchQuery(e.target.value)} // And this line
                   className="block w-full rounded-md border-0 py-1.5 pr-14 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                 />
                 <div className="absolute inset-y-0 right-0 flex py-1.5 pr-1.5">
@@ -122,6 +113,7 @@ export default function Appointment() {
                 >
                   <option value="">All Status</option>
                   <option value="confirmed">Confirmed</option>
+
                   <option value="pending">Pending</option>
                   <option value="canceled">Canceled</option>
                 </select>
@@ -176,6 +168,17 @@ export default function Appointment() {
                             ? appointment.status === statusFilter
                             : true
                         )
+                        .filter(
+                          (
+                            appointment // Add this filter
+                          ) =>
+                            searchQuery
+                              ? appointment.patient_name
+                                  .toLowerCase()
+                                  .includes(searchQuery.toLowerCase())
+                              : true
+                        )
+                        .sort(sortAppointments)
                         .map(appointment => (
                           <tr key={appointment.id}>
                             <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">

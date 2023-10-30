@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import Sidebar from '@/components/Common/Sidebar';
 import { Page } from '@/constants/Navigation';
@@ -18,6 +18,23 @@ const people = [
 ];
 
 export default function Patient() {
+  const [openAddApptModal, setOpenAddApptModal] = useState<boolean>(false);
+
+  // Additional features
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [filteredAppointments, setFilteredAppointments] = useState(people);
+  const [statusFilter, setStatusFilter] = useState<string | null>(null);
+
+  const toggleSortOrder = () => {
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+  };
+
+  const sortAppointments = (str1: string, str2: string) => {
+    return sortOrder === 'asc'
+      ? str1.localeCompare(str2)
+      : str2.localeCompare(str1);
+  };
+
   const inputReference = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -44,7 +61,9 @@ export default function Patient() {
                 Patients
               </h1>
               <p className="mt-2 text-sm text-gray-700">
-                A list of all of your patients and an overview of their information. Click "View" to see detailed information and EKG data.
+                A list of all of your patients and an overview of their
+                information. Click the patient's name to see detailed
+                information and EKG data.
               </p>
             </div>
             <div className="mt-4 sm:ml-16 sm:mt-0 flex flex-row">
@@ -119,7 +138,12 @@ export default function Patient() {
                       {people.map(person => (
                         <tr key={person.id}>
                           <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                            {person.name}
+                            <Link
+                              href={`/patient/${person.id}`}
+                              className="text-blue-600 hover:text-blue-900"
+                            >
+                              {person.name}
+                            </Link>
                           </td>
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-600">
                             {person.id}
@@ -132,15 +156,6 @@ export default function Patient() {
                           </td>
                           <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-600">
                             {person.contact}
-                          </td>
-                          <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                            <Link
-                              href={`/patient/${person.id}`}
-                              className="text-blue-600 hover:text-blue-900"
-                            >
-                              View
-                              <span className="sr-only">, {person.name}</span>
-                            </Link>
                           </td>
                         </tr>
                       ))}

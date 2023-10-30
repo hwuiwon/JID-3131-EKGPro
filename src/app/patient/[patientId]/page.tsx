@@ -7,23 +7,28 @@ import Sidebar from '@/components/Common/Sidebar';
 import UploadModal from '@/components/patient/UploadModal';
 import { Page } from '@/constants/Navigation';
 
+// TODO: Dynamic load from ../page.tsx ?
 const projects = [
   {
+    id: 1,
     name: '08/01/2023',
-    href: '#',
+    href: '/_N_E/src/app/images/sample/ekg/fullEKG1.jpeg',
     bgColor: 'bg-pink-600',
   },
   {
+    id: 2,
     name: '07/31/2023',
-    href: '#',
+    href: '/_N_E/src/app/images/sample/ekg/fullEKG2.jpeg',
     bgColor: 'bg-purple-600',
   },
   {
+    id: 3,
     name: '07/30/2023',
     href: '#',
     bgColor: 'bg-yellow-500',
   },
   {
+    id: 4,
     name: '07/29/2023',
     href: '#',
     bgColor: 'bg-green-500',
@@ -41,6 +46,25 @@ export default function PatientInfo({
   const [sex, setSex] = useState<string>('');
   const [phone, setPhone] = useState<string>('');
   const [doctor, setDoctor] = useState<string>('');
+
+
+  // Map between an EKG and its selected state.
+  const [toggleEKGs, setToggleEKGs] = useState<
+    { id: number; selected: boolean }[]
+  >(projects.map(project => ({ id: project.id, selected: false })));
+  const handleToggleEKGs = (id: number) => {
+    const newToggleState = toggleEKGs.map(
+      (project: { id: number; selected: boolean }) => {
+        if (project.id === id) {
+          // Return the opposite of current selection state
+          return (project = { id: project.id, selected: !project.selected });
+        }
+        // Return self if no change
+        return project;
+      }
+    );
+    setToggleEKGs(newToggleState);
+  };
 
   useEffect(() => {
     // fetch information using patient id
@@ -145,10 +169,24 @@ export default function PatientInfo({
                     <button
                       className={clsx(
                         project.bgColor,
-                        'flex w-12 flex-shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white'
+                        'flex w-12 flex-shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white',
+                        // Displays whether EKG is selected.
+                        toggleEKGs
+                          .filter(p => p.id === project.id)
+                          .some(p => p.selected) ? 'border-y-2 border-l-2 border-green-400' : ''
                       )}
+                      onClick={() => handleToggleEKGs(project.id)}
                     />
-                    <button className="flex flex-1 items-center truncate rounded-r-md border-b border-r border-t border-gray-200 bg-white hover:bg-gray-100">
+                    <button
+                      className={clsx(
+                        "flex flex-1 items-center truncate rounded-r-md bg-white hover:bg-gray-100",
+                        // Displays whether EKG is selected.
+                        toggleEKGs
+                          .filter(p => p.id === project.id)
+                          .some(p => p.selected) ? 'border-y-2 border-r-8 border-green-400' : 'border-y border-r border-gray-200'
+                      )}
+                      onClick={() => handleToggleEKGs(project.id)}
+                    >
                       <div className="flex-1 truncate px-4 py-2 text-sm font-medium text-left">
                         {project.name}
                       </div>
@@ -163,7 +201,15 @@ export default function PatientInfo({
             </div>
           </div>
           <div className="col-span-3">
-            <div className="w-full rounded-md bg-white shadow-md border border-gray-200 h-5/6"></div>
+            <div className="w-full flex flex-col rounded-md bg-white shadow-md border border-gray-200 h-5/6">
+              {/* Will be image wrapper at some point for manipulation */}
+              {projects.map(project => (
+                // Dynamic image source.
+                toggleEKGs
+                  .filter(p => p.id === project.id)
+                  .some(p => p.selected) && <img src={project.href} className='mx-auto py-10 px-10 w-full h-full object-cover'></img>
+              ))}
+            </div>
           </div>
         </div>
       </div>
