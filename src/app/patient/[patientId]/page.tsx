@@ -47,7 +47,6 @@ export default function PatientInfo({
   const [phone, setPhone] = useState<string>('');
   const [doctor, setDoctor] = useState<string>('');
 
-
   // Map between an EKG and its selected state.
   const [toggleEKGs, setToggleEKGs] = useState<
     { id: number; selected: boolean }[]
@@ -173,17 +172,21 @@ export default function PatientInfo({
                         // Displays whether EKG is selected.
                         toggleEKGs
                           .filter(p => p.id === project.id)
-                          .some(p => p.selected) ? 'border-y-2 border-l-2 border-green-400' : ''
+                          .some(p => p.selected)
+                          ? 'border-y-2 border-l-2 border-green-400'
+                          : ''
                       )}
                       onClick={() => handleToggleEKGs(project.id)}
                     />
                     <button
                       className={clsx(
-                        "flex flex-1 items-center truncate rounded-r-md bg-white hover:bg-gray-100",
+                        'flex flex-1 items-center truncate rounded-r-md bg-white hover:bg-gray-100',
                         // Displays whether EKG is selected.
                         toggleEKGs
                           .filter(p => p.id === project.id)
-                          .some(p => p.selected) ? 'border-y-2 border-r-8 border-green-400' : 'border-y border-r border-gray-200'
+                          .some(p => p.selected)
+                          ? 'border-y-2 border-r-8 border-green-400'
+                          : 'border-y border-r border-gray-200'
                       )}
                       onClick={() => handleToggleEKGs(project.id)}
                     >
@@ -203,12 +206,20 @@ export default function PatientInfo({
           <div className="col-span-3">
             <div className="w-full flex flex-col rounded-md bg-white shadow-md border border-gray-200 h-5/6">
               {/* Will be image wrapper at some point for manipulation */}
-              {projects.map(project => (
-                // Dynamic image source.
-                toggleEKGs
-                  .filter(p => p.id === project.id)
-                  .some(p => p.selected) && <img src={project.href} className='mx-auto py-10 px-10 w-full h-full object-cover'></img>
-              ))}
+              {projects.map(
+                project =>
+                  // Dynamic image source.
+                  toggleEKGs
+                    .filter(p => p.id === project.id)
+                    .some(p => p.selected) && (
+                    // eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element
+                    <img
+                      key={project.id}
+                      src={project.href}
+                      className="mx-auto py-10 px-10 w-full h-full object-cover"
+                    ></img>
+                  )
+              )}
             </div>
           </div>
         </div>
