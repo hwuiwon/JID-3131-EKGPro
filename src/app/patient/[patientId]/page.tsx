@@ -47,7 +47,6 @@ export default function PatientInfo({
   const [phone, setPhone] = useState<string>('');
   const [doctor, setDoctor] = useState<string>('');
 
-
   // Map between an EKG and its selected state.
   const [toggleEKGs, setToggleEKGs] = useState<
     { id: number; selected: boolean }[]
@@ -90,14 +89,6 @@ export default function PatientInfo({
                 Patient since <time dateTime="2020-08-25">August 25, 2020</time>
               </p>
             </div>
-          </div>
-          <div className="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-3 sm:space-y-0 sm:space-x-reverse md:mt-0 md:flex-row md:space-x-3">
-            <button
-              type="button"
-              className="inline-flex items-center justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-            >
-              Schedule Appointment
-            </button>
           </div>
         </div>
 
@@ -145,14 +136,8 @@ export default function PatientInfo({
           <div className="col-span-1">
             <button
               type="button"
-              className="w-full rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-            >
-              View All Segments
-            </button>
-            <button
-              type="button"
               onClick={() => setOpenUploadModal(true)}
-              className="w-full mt-5 rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+              className="w-full rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
             >
               Upload EKG
             </button>
@@ -173,17 +158,21 @@ export default function PatientInfo({
                         // Displays whether EKG is selected.
                         toggleEKGs
                           .filter(p => p.id === project.id)
-                          .some(p => p.selected) ? 'border-y-2 border-l-2 border-green-400' : ''
+                          .some(p => p.selected)
+                          ? 'border-y-2 border-l-2 border-green-400'
+                          : ''
                       )}
                       onClick={() => handleToggleEKGs(project.id)}
                     />
                     <button
                       className={clsx(
-                        "flex flex-1 items-center truncate rounded-r-md bg-white hover:bg-gray-100",
+                        'flex flex-1 items-center truncate rounded-r-md bg-white hover:bg-gray-100',
                         // Displays whether EKG is selected.
                         toggleEKGs
                           .filter(p => p.id === project.id)
-                          .some(p => p.selected) ? 'border-y-2 border-r-8 border-green-400' : 'border-y border-r border-gray-200'
+                          .some(p => p.selected)
+                          ? 'border-y-2 border-r-8 border-green-400'
+                          : 'border-y border-r border-gray-200'
                       )}
                       onClick={() => handleToggleEKGs(project.id)}
                     >
@@ -203,12 +192,20 @@ export default function PatientInfo({
           <div className="col-span-3">
             <div className="w-full flex flex-col rounded-md bg-white shadow-md border border-gray-200 h-5/6">
               {/* Will be image wrapper at some point for manipulation */}
-              {projects.map(project => (
-                // Dynamic image source.
-                toggleEKGs
-                  .filter(p => p.id === project.id)
-                  .some(p => p.selected) && <img src={project.href} className='mx-auto py-10 px-10 w-full h-full object-cover'></img>
-              ))}
+              {projects.map(
+                project =>
+                  // Dynamic image source.
+                  toggleEKGs
+                    .filter(p => p.id === project.id)
+                    .some(p => p.selected) && (
+                    <img
+                      key={project.id}
+                      alt=""
+                      src={project.href}
+                      className="mx-auto py-10 px-10 w-full h-full object-cover"
+                    ></img>
+                  )
+              )}
             </div>
           </div>
         </div>
