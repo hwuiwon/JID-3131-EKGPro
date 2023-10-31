@@ -1,6 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
 import Sidebar from '@/components/Common/Sidebar';
@@ -90,14 +91,6 @@ export default function PatientInfo({
               </p>
             </div>
           </div>
-          <div className="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-3 sm:space-y-0 sm:space-x-reverse md:mt-0 md:flex-row md:space-x-3">
-            <button
-              type="button"
-              className="inline-flex items-center justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-            >
-              Schedule Appointment
-            </button>
-          </div>
         </div>
 
         <div className="mx-auto mt-8 gap-6 sm:px-6">
@@ -144,14 +137,8 @@ export default function PatientInfo({
           <div className="col-span-1">
             <button
               type="button"
-              className="w-full rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-            >
-              View All Segments
-            </button>
-            <button
-              type="button"
               onClick={() => setOpenUploadModal(true)}
-              className="w-full mt-5 rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+              className="w-full rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
             >
               Upload EKG
             </button>
@@ -212,12 +199,12 @@ export default function PatientInfo({
                   toggleEKGs
                     .filter(p => p.id === project.id)
                     .some(p => p.selected) && (
-                    // eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element
-                    <img
+                    <Image
                       key={project.id}
+                      alt=""
                       src={project.href}
                       className="mx-auto py-10 px-10 w-full h-full object-cover"
-                    ></img>
+                    ></Image>
                   )
               )}
             </div>

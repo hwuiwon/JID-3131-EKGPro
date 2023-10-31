@@ -61,9 +61,8 @@ export default function Patient() {
                 Patients
               </h1>
               <p className="mt-2 text-sm text-gray-700">
-                A list of all of your patients and an overview of their
-                information. Click the patient's name to see detailed
-                information and EKG data.
+                A list of all of your patients and their overview. Click the
+                patient's name to see detailed information and EKG data.
               </p>
             </div>
             <div className="mt-4 sm:ml-16 sm:mt-0 flex flex-row">

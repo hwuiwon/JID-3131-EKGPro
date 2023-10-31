@@ -30,10 +30,4 @@ export const getNavigationItems = (
     icon: UserIcon,
     current: selected === Page.PATIENT,
   },
-  {
-    name: 'Appointments',
-    href: '/appointment',
-    icon: ClockIcon,
-    current: selected === Page.APPOINTMENT,
-  },
 ];
