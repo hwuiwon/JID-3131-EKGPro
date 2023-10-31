@@ -30,32 +30,15 @@ const formats = [
 ];
 
 // TODO: Dynamic load from ../page.tsx ?
-const projects = [
-  {
-    id: 1,
-    name: '08/01/2023',
-    href: '/_N_E/src/app/images/sample/ekg/fullEKG1.jpeg',
-    bgColor: 'bg-pink-600',
-  },
-  {
-    id: 2,
-    name: '07/31/2023',
-    href: '/_N_E/src/app/images/sample/ekg/fullEKG2.jpeg',
-    bgColor: 'bg-purple-600',
-  },
-  {
-    id: 3,
-    name: '07/30/2023',
-    href: '#',
-    bgColor: 'bg-yellow-500',
-  },
-  {
-    id: 4,
-    name: '07/29/2023',
-    href: '#',
-    bgColor: 'bg-green-500',
-  },
-];
+type projectType = {
+  id: number;
+  name: string;
+  selected: boolean;
+  bgColor: string;
+  href: string;
+};
+
+const noFocusRing = ' outline-none';
 
 export default function PatientInfo({
   params,
@@ -68,15 +51,85 @@ export default function PatientInfo({
   const [sex, setSex] = useState<string>('');
   const [phone, setPhone] = useState<string>('');
   const [doctor, setDoctor] = useState<string>('');
+  const [projects, setProjects] = useState<projectType[]>([
+    {
+      id: 1,
+      name: '08/01/2023',
+      selected: false,
+      href: '/_N_E/src/app/images/sample/ekg/fullEKG1.jpeg',
+      bgColor: 'bg-pink-600',
+    },
+    {
+      id: 2,
+      name: '07/31/2023',
+      selected: false,
+      href: '/_N_E/src/app/images/sample/ekg/fullEKG2.jpeg',
+      bgColor: 'bg-purple-600',
+    },
+    {
+      id: 3,
+      name: '07/30/2023',
+      selected: false,
+      href: '#',
+      bgColor: 'bg-yellow-500',
+    },
+    {
+      id: 4,
+      name: '07/29/2023',
+      selected: false,
+      href: '#',
+      bgColor: 'bg-green-500',
+    },
+  ]);
+  const [activeEKG, setActiveEKG] = useState<number>(-1);
 
-  // Map between an EKG and its selected state.
-  const [toggleEKGs, setToggleEKGs] = useState<
-    { id: number; selected: boolean }[]
-  >(projects.map(project => ({ id: project.id, selected: false })));
+  const handleActiveEKG = (id: number) => {
+    if (id === activeEKG) setActiveEKG(-1);
+    else setActiveEKG(id);
+  };
+
+  
   const [notes, setNotes] = useState<string>(''); // State to hold notes
 
   const handleNotesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNotes(e.target.value);
+  };
+  
+  const handleToggleEKGs = (id: number) => {
+    const newToggleState = projects.map(project => {
+      if (project.id === id) {
+        // if project is unselected, set it to activeEKG and vice versa
+        setActiveEKG(project.selected ? -1 : id);
+        return (project = { ...project, selected: !project.selected });
+      }
+      return project;
+    });
+    setProjects(newToggleState);
+  };
+
+  // eslint-disable-next-line no-unused-vars, unicorn/consistent-function-scoping
+  const handleColorChange = (id: number) => {
+    console.log('TODO CHANGE COLOR');
+  };
+
+  const handleKeyPress = (event: any) => {
+    const allowedKeys = ['ArrowUp', 'ArrowDown'];
+    if (activeEKG === -1 || !allowedKeys.includes(event.key)) return;
+    // prevents scrolling
+    event.preventDefault();
+    const activeEKGIndex = projects.findIndex(
+      project => project.id === activeEKG
+    );
+    let newIndex = -1;
+    if (event.key === 'ArrowUp') {
+      newIndex =
+        activeEKGIndex === 0 ? projects.length - 1 : activeEKGIndex - 1;
+    } else if (event.key === 'ArrowDown') {
+      newIndex =
+        activeEKGIndex === projects.length - 1 ? 0 : activeEKGIndex + 1;
+    }
+    // eslint-disable-next-line security/detect-object-injection
+    setActiveEKG(projects[newIndex].id);
   };
 
   // const handleEnterKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -168,41 +221,58 @@ export default function PatientInfo({
               <h2 className="text-sm font-medium text-gray-600">
                 Patient EKGs
               </h2>
-              <ul className="mt-3 grid grid-cols-1 gap-3">
+              <ul
+                className="mt-3 grid grid-cols-1 gap-3"
+                role="listbox"
+                onKeyDown={e => handleKeyPress(e)}
+              >
                 {projects.map(project => (
                   <li
                     key={project.name}
-                    className="col-span-1 flex rounded-md shadow-sm"
+                    className={clsx(
+                      activeEKG === project.id || project.selected
+                        ? 'border border-2 border-blue-400'
+                        : 'border border-2 border-transparent',
+                      'col-span-1 flex rounded-md shadow-sm hover:border-2 hover:border-blue-400'
+                    )}
                   >
                     <button
                       className={clsx(
-                        project.bgColor,
-                        'flex w-12 flex-shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white',
-                        // Displays whether EKG is selected.
-                        toggleEKGs
+                        projects
                           .filter(p => p.id === project.id)
                           .some(p => p.selected)
-                          ? 'border-y-2 border-l-2 border-green-400'
-                          : ''
+                          ? 'bg-blue-400'
+                          : 'border border-1 border-gray-300',
+                        'flex w-12 flex-shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white',
+                        noFocusRing
                       )}
                       onClick={() => handleToggleEKGs(project.id)}
                     />
                     <button
                       className={clsx(
-                        'flex flex-1 items-center truncate rounded-r-md bg-white hover-bg-gray-100',
-                        // Displays whether EKG is selected.
-                        toggleEKGs
-                          .filter(p => p.id === project.id)
-                          .some(p => p.selected)
-                          ? 'border-y-2 border-r-8 border-green-400'
-                          : 'border-y border-r border-gray-200'
+                        'flex flex-1 items-center truncate bg-white',
+                        noFocusRing
                       )}
-                      onClick={() => handleToggleEKGs(project.id)}
+                      onClick={() => handleActiveEKG(project.id)}
                     >
-                      <div className="flex-1 truncate px-4 py-2 text-sm font-medium text-left">
+                      <div
+                        className={
+                          'flex-1 truncate px-4 py-2 text-sm font-medium text-left' +
+                          noFocusRing
+                        }
+                      >
                         {project.name}
                       </div>
                     </button>
+                    <button
+                      className={clsx(
+                        project.bgColor,
+                        'flex w-12 flex-shrink-0 items-center justify-center rounded-r-md text-sm font-medium text-white',
+                        project.selected ? 'border-r-8 border-blue-400' : '',
+                        noFocusRing
+                      )}
+                      onClick={() => handleColorChange(project.id)}
+                    />
                   </li>
                 ))}
               </ul>
@@ -223,13 +293,10 @@ export default function PatientInfo({
               {/* Will be image wrapper at some point for manipulation */}
               {projects.map(
                 project =>
-                  // Dynamic image source.
-                  toggleEKGs
-                    .filter(p => p.id === project.id)
-                    .some(p => p.selected) && (
+                  (project.selected || project.id === activeEKG) && (
+                    // eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element
                     <img
                       key={project.id}
-                      alt=""
                       src={project.href}
                       className="mx-auto py-10 px-10 w-full h-full object-cover"
                     ></img>
