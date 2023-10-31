@@ -82,6 +82,26 @@ export default function PatientInfo({
     console.log('TODO CHANGE COLOR');
   };
 
+  const handleKeyPress = (event: any) => {
+    const allowedKeys = ['ArrowUp', 'ArrowDown'];
+    if (activeEKG === -1 || !allowedKeys.includes(event.key)) return;
+    // prevents scrolling
+    event.preventDefault();
+    const activeEKGIndex = projects.findIndex(
+      project => project.id === activeEKG
+    );
+    let newIndex = -1;
+    if (event.key === 'ArrowUp') {
+      newIndex =
+        activeEKGIndex === 0 ? projects.length - 1 : activeEKGIndex - 1;
+    } else if (event.key === 'ArrowDown') {
+      newIndex =
+        activeEKGIndex === projects.length - 1 ? 0 : activeEKGIndex + 1;
+    }
+    // eslint-disable-next-line security/detect-object-injection
+    setActiveEKG(projects[newIndex].id);
+  };
+
   useEffect(() => {
     // fetch information using patient id
     setDob('11/11/1995');
@@ -170,7 +190,11 @@ export default function PatientInfo({
               <h2 className="text-sm font-medium text-gray-600">
                 Patient EKGs
               </h2>
-              <ul className="mt-3 grid grid-cols-1 gap-3">
+              <ul
+                className="mt-3 grid grid-cols-1 gap-3"
+                role="listbox"
+                onKeyDown={e => handleKeyPress(e)}
+              >
                 {projects.map(project => (
                   <li
                     key={project.name}
