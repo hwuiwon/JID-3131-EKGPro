@@ -1,7 +1,6 @@
 'use client';
 
 import clsx from 'clsx';
-import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
 import Sidebar from '@/components/Common/Sidebar';
@@ -252,11 +251,11 @@ export default function PatientInfo({
                 project =>
                   (project.selected || project.id === activeEKG) && (
                     // eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element
-                    <Image
+                    <img
                       key={project.id}
                       src={project.href}
                       className="mx-auto py-10 px-10 w-full h-full object-cover"
-                    ></Image>
+                    ></img>
                   )
               )}
             </div>
