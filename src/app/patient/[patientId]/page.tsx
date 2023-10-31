@@ -1,11 +1,33 @@
 'use client';
 
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Import styles
+
 import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 
 import Sidebar from '@/components/Common/Sidebar';
 import UploadModal from '@/components/patient/UploadModal';
 import { Page } from '@/constants/Navigation';
+
+const modules = {
+  toolbar: [
+    [{ list: 'bullet' }, { list: 'ordered' }],
+    ['bold', 'italic', 'underline'],
+    [{ align: [] }],
+    [{ bulletlist: '•' }], // Custom bullet button without auto-indentation
+  ],
+};
+
+const formats = [
+  'list',
+  'bullet',
+  'ordered',
+  'bold',
+  'italic',
+  'underline',
+  'align',
+];
 
 // TODO: Dynamic load from ../page.tsx ?
 type projectType = {
@@ -66,6 +88,13 @@ export default function PatientInfo({
     else setActiveEKG(id);
   };
 
+  
+  const [notes, setNotes] = useState<string>(''); // State to hold notes
+
+  const handleNotesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setNotes(e.target.value);
+  };
+  
   const handleToggleEKGs = (id: number) => {
     const newToggleState = projects.map(project => {
       if (project.id === id) {
@@ -102,6 +131,15 @@ export default function PatientInfo({
     // eslint-disable-next-line security/detect-object-injection
     setActiveEKG(projects[newIndex].id);
   };
+
+  // const handleEnterKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  //   if (e.key === 'Enter') {
+  //     // Prevent the default new line behavior
+  //     e.preventDefault();
+  //     // Add a bullet point when Enter is pressed
+  //     setNotes(prevNotes => prevNotes + '\n• ');
+  //   }
+  // };
 
   useEffect(() => {
     // fetch information using patient id
@@ -175,7 +213,7 @@ export default function PatientInfo({
             <button
               type="button"
               onClick={() => setOpenUploadModal(true)}
-              className="w-full rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+              className="w-full rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover-bg-green-500 focus-visible-outline focus-visible-outline-2 focus-visible-outline-offset-2 focus-visible-outline-green-600"
             >
               Upload EKG
             </button>
@@ -239,9 +277,15 @@ export default function PatientInfo({
                 ))}
               </ul>
             </div>
-            <div className="w-full mt-5 rounded-md bg-white border border-gray-200 px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-md h-[420px] flex flex-col">
-              <h2 className="text-sm font-medium text-gray-600 pb-4">Notes</h2>
-              <textarea className="text-sm font-medium rounded-md border border-gray-300 w-full resize-none h-auto flex-grow mb-2"></textarea>
+            <div className="w-full mt-5 rounded-md bg-white border border-gray-200 px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-md">
+              <h2 className="text-sm font-medium text-gray-600">Notes</h2>
+              <ReactQuill
+                value={notes}
+                onChange={setNotes}
+                modules={modules}
+                formats={formats}
+                style={{ height: '100%' }}
+              />
             </div>
           </div>
           <div className="col-span-3">
