@@ -10,6 +10,7 @@ interface UploadModalProperties {
 export default function UploadModal({ open, setOpen }: UploadModalProperties) {
   const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
   const [alertMessage, setAlertMessage] = useState('');
+  const [fileNotSelectedMessage, setFileNotSelectedMessage] = useState('');
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] ?? undefined;
@@ -39,7 +40,7 @@ export default function UploadModal({ open, setOpen }: UploadModalProperties) {
       setOpen(false);
       setSelectedFile(undefined);
     } else {
-      // handle error if trying to upload with no file selected
+      setFileNotSelectedMessage('File is not selected. Please upload a file');
     }
   };
 
@@ -81,6 +82,9 @@ export default function UploadModal({ open, setOpen }: UploadModalProperties) {
                       className="mb-5 text-base font-semibold leading-6 text-gray-900"
                     >
                       Upload File
+                      {fileNotSelectedMessage ? 
+                      <div className='mb-5 mt-3 text-sm leading-6 text-red-500'>{fileNotSelectedMessage}</div> : 
+                      <div></div>}
                     </Dialog.Title>
                     <div className="flex w-full items-center justify-center">
                       <label
