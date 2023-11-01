@@ -16,6 +16,11 @@ export default function UploadModal({ open, setOpen }: UploadModalProperties) {
     setSelectedFile(file);
   };
 
+  // New state variables for title, date, and notes
+  const [title, setTitle] = useState('');
+  const [date, setDate] = useState('');
+  const [notes, setNotes] = useState('');
+
   const handleUpload = () => {
     // do something
     setOpen(false);
@@ -61,6 +66,47 @@ export default function UploadModal({ open, setOpen }: UploadModalProperties) {
                     >
                       Upload File
                     </Dialog.Title>
+                    {/* Title Input */}
+                    <div className="mb-4">
+                      <label className="block text-sm font-medium text-gray-700">
+                        Title
+                      </label>
+                      <input
+                        type="text"
+                        value={title}
+                        onChange={e => setTitle(e.target.value)}
+                        className="mt-1 p-2 w-full border rounded-md"
+                        placeholder="EKG Title"
+                      />
+                    </div>
+
+                    {/* Date Input */}
+                    <div className="mb-4">
+                      <label className="block text-sm font-medium text-gray-700">
+                        Date
+                      </label>
+                      <input
+                        type="date"
+                        value={date}
+                        onChange={e => setDate(e.target.value)}
+                        className="mt-1 p-2 w-full border rounded-md"
+                      />
+                    </div>
+
+                    {/* Notes Textarea */}
+                    <div className="mb-4">
+                      <label className="block text-sm font-medium text-gray-700">
+                        Notes
+                      </label>
+                      <textarea
+                        value={notes}
+                        onChange={e => setNotes(e.target.value)}
+                        className="mt-1 p-2 w-full border rounded-md"
+                        placeholder="Any additional notes..."
+                        rows={4}
+                      />
+                    </div>
+
                     <div className="flex w-full items-center justify-center">
                       <label
                         htmlFor="dropzone-file"
