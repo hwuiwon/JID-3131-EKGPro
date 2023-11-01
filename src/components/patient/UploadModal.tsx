@@ -16,10 +16,31 @@ export default function UploadModal({ open, setOpen }: UploadModalProperties) {
     setSelectedFile(file);
   };
 
-  const handleUpload = () => {
-    // do something
-    setOpen(false);
-    setSelectedFile(undefined);
+  const handleUpload = async () => {
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+      try {
+        const response = await fetch('http://127.0.0.1:8000/v1/upload', {
+          method: 'POST',
+          body: formData,
+        });
+  
+        if (response.status === 200) {
+          // Handle success
+          console.log('File uploaded successfully');
+        } else {
+          // Handle errors
+          console.error('File upload failed');
+        }
+      } catch (error) {
+        console.error('Network error', error);
+      }
+      setOpen(false);
+      setSelectedFile(undefined);
+    } else {
+      // handle error if trying to upload with no file selected
+    }
   };
 
   return (
