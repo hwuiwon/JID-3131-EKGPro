@@ -10,21 +10,42 @@ interface UploadModalProperties {
 export default function UploadModal({ open, setOpen }: UploadModalProperties) {
   const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
   const [alertMessage, setAlertMessage] = useState('');
-
+  const [fileNotSelectedMessage, setFileNotSelectedMessage] = useState('');
+  // New state variables for title, date, and notes
+  const [title, setTitle] = useState('');
+  const [date, setDate] = useState('');
+  const [notes, setNotes] = useState('');
+  
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] ?? undefined;
     setSelectedFile(file);
   };
 
-  // New state variables for title, date, and notes
-  const [title, setTitle] = useState('');
-  const [date, setDate] = useState('');
-  const [notes, setNotes] = useState('');
-
-  const handleUpload = () => {
-    // do something
-    setOpen(false);
-    setSelectedFile(undefined);
+  const handleUpload = async () => {
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+      try {
+        const response = await fetch('http://127.0.0.1:8000/v1/upload', {
+          method: 'POST',
+          body: formData,
+        });
+  
+        if (response.status === 200) {
+          // Handle success
+          console.log('File uploaded successfully');
+        } else {
+          // Handle errors
+          console.error('File upload failed');
+        }
+      } catch (error) {
+        console.error('Network error', error);
+      }
+      setOpen(false);
+      setSelectedFile(undefined);
+    } else {
+      setFileNotSelectedMessage('File is not selected. Please upload a file');
+    }
   };
 
   return (
@@ -65,6 +86,9 @@ export default function UploadModal({ open, setOpen }: UploadModalProperties) {
                       className="mb-5 text-base font-semibold leading-6 text-gray-900"
                     >
                       Upload File
+                      {fileNotSelectedMessage ? 
+                      <div className='mb-5 mt-3 text-sm leading-6 text-red-500'>{fileNotSelectedMessage}</div> : 
+                      <div></div>}
                     </Dialog.Title>
                     {/* Title Input */}
                     <div className="mb-4">
