@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import Sidebar from '@/components/Common/Sidebar';
 import UploadModal from '@/components/patient/UploadModal';
 import { Page } from '@/constants/Navigation';
+import EKGMovable from '@/components/patient/EKGMovable';
 
 // TODO: Dynamic load from ../page.tsx ?
 const projects = [
@@ -207,7 +208,7 @@ export default function PatientInfo({
                 // Dynamic image source.
                 toggleEKGs
                   .filter(p => p.id === project.id)
-                  .some(p => p.selected) && <img src={project.href} className='mx-auto py-10 px-10 w-full h-full object-cover'></img>
+                  .some(p => p.selected) && <EKGMovable></EKGMovable>
               ))}
             </div>
           </div>
