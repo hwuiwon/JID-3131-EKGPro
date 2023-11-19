@@ -7,32 +7,33 @@ import Sidebar from '@/components/Common/Sidebar';
 import UploadModal from '@/components/patient/UploadModal';
 import { Page } from '@/constants/Navigation';
 import EKGMovable from '@/components/patient/EKGMovable';
+import { EKG } from '@/constants/Ekg';
 
 // TODO: Dynamic load from ../page.tsx ?
 const projects = [
   {
-    id: 1,
-    name: '08/01/2023',
-    href: '/_N_E/src/app/images/sample/ekg/fullEKG1.jpeg',
-    bgColor: 'bg-pink-600',
+    ekg: new EKG(1,
+      '08/01/2023',
+      '/_N_E/src/app/images/sample/ekg/fullEKG1.jpeg',
+      'bg-pink-600',)
   },
   {
-    id: 2,
-    name: '07/31/2023',
-    href: '/_N_E/src/app/images/sample/ekg/fullEKG2.jpeg',
-    bgColor: 'bg-purple-600',
+    ekg: new EKG(2,
+      '07/31/2023',
+      '/_N_E/src/app/images/sample/ekg/fullEKG2.jpeg',
+      'bg-purple-600',)
   },
   {
-    id: 3,
-    name: '07/30/2023',
-    href: '#',
-    bgColor: 'bg-yellow-500',
+    ekg: new EKG(3,
+      '07/30/2023',
+      '#',
+      'bg-yellow-500',)
   },
   {
-    id: 4,
-    name: '07/29/2023',
-    href: '#',
-    bgColor: 'bg-green-500',
+    ekg: new EKG(4,
+      '07/29/2023',
+      '#',
+      'bg-green-500',)
   },
 ];
 
@@ -52,10 +53,10 @@ export default function PatientInfo({
   // Map between an EKG and its selected state.
   const [toggleEKGs, setToggleEKGs] = useState<
     { id: number; selected: boolean }[]
-  >(projects.map(project => ({ id: project.id, selected: false })));
+  >(projects.map(project => ({ id: project.ekg.id, selected: false })));
   const handleToggleEKGs = (id: number) => {
     const newToggleState = toggleEKGs.map(
-      (project: { id: number; selected: boolean }) => {
+      (project) => {
         if (project.id === id) {
           // Return the opposite of current selection state
           return (project = { id: project.id, selected: !project.selected });
@@ -164,32 +165,32 @@ export default function PatientInfo({
               <ul className="mt-3 grid grid-cols-1 gap-3">
                 {projects.map(project => (
                   <li
-                    key={project.name}
+                    key={project.ekg.name}
                     className="col-span-1 flex rounded-md shadow-sm"
                   >
                     <button
                       className={clsx(
-                        project.bgColor,
+                        project.ekg.bgColor,
                         'flex w-12 flex-shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white',
                         // Displays whether EKG is selected.
                         toggleEKGs
-                          .filter(p => p.id === project.id)
+                          .filter(p => p.id === project.ekg.id)
                           .some(p => p.selected) ? 'border-y-2 border-l-2 border-green-400' : ''
                       )}
-                      onClick={() => handleToggleEKGs(project.id)}
+                      onClick={() => handleToggleEKGs(project.ekg.id)}
                     />
                     <button
                       className={clsx(
                         "flex flex-1 items-center truncate rounded-r-md bg-white hover:bg-gray-100",
                         // Displays whether EKG is selected.
                         toggleEKGs
-                          .filter(p => p.id === project.id)
+                          .filter(p => p.id === project.ekg.id)
                           .some(p => p.selected) ? 'border-y-2 border-r-8 border-green-400' : 'border-y border-r border-gray-200'
                       )}
-                      onClick={() => handleToggleEKGs(project.id)}
+                      onClick={() => handleToggleEKGs(project.ekg.id)}
                     >
                       <div className="flex-1 truncate px-4 py-2 text-sm font-medium text-left">
-                        {project.name}
+                        {project.ekg.name}
                       </div>
                     </button>
                   </li>
@@ -207,8 +208,8 @@ export default function PatientInfo({
               {projects.map(project => (
                 // Dynamic image source.
                 toggleEKGs
-                  .filter(p => p.id === project.id)
-                  .some(p => p.selected) && <EKGMovable></EKGMovable>
+                  .filter(p => p.id === project.ekg.id)
+                  .some(p => p.selected) && <EKGMovable ekg={project.ekg}></EKGMovable>
               ))}
             </div>
           </div>
