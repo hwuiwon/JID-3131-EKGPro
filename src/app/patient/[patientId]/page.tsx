@@ -156,7 +156,7 @@ export default function PatientInfo({
             <button
               type="button"
               className="w-full rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-              onClick={() => setAllEKGs(true)}
+              onClick={() => setAllEKGs(toggleEKGs.some(p => !p.selected))}
             >
               View All Segments
             </button>
@@ -167,6 +167,10 @@ export default function PatientInfo({
             >
               Upload EKG
             </button>
+            <button
+              className="w-full mt-5 rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+              onClick={() => {/* TODO: Hit GET API */}}
+              >Download Chosen EKGs </button>
             <div className="w-full mt-5 rounded-md bg-white border border-gray-200 px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-md">
               <h2 className="text-sm font-medium text-gray-600">
                 Patient EKGs
