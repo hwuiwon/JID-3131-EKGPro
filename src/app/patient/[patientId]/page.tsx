@@ -67,6 +67,14 @@ export default function PatientInfo({
     );
     setToggleEKGs(newToggleState);
   };
+  const setAllEKGs = (state: boolean) => {
+    const newToggleState = toggleEKGs.map(
+      project => {
+        return (project = { id: project.id, selected: state});
+      }
+    )
+    setToggleEKGs(newToggleState);
+  }
 
   useEffect(() => {
     // fetch information using patient id
@@ -148,6 +156,7 @@ export default function PatientInfo({
             <button
               type="button"
               className="w-full rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+              onClick={() => setAllEKGs(true)}
             >
               View All Segments
             </button>
