@@ -17,7 +17,7 @@ const EKGMovable = (props: {ekg: EKG}) => {
       <div style={{flex: "2"}}>   
         <div style={{padding: "10px", margin: "auto"}} className={className}></div>   
         <div /*style={{margin: "4px", flex: "1"}} */>
-          <Image src={im} alt="EKG" style={{width: "100%", height: "auto"}}/>
+          <Image src={im} alt="EKG" style={{width: "100%", height: "auto", userSelect: "none", filter: "opacity(50%)"}}/>
         </div>
       </div>
     </Draggable>
