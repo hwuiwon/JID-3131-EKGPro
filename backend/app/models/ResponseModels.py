@@ -8,3 +8,7 @@ class ErrorDTO(BaseModel):
 
 class RegisterUserResponse(BaseModel):
     status: int
+    
+class UploadEKGResponse(BaseModel):
+    status: int
+    message: str

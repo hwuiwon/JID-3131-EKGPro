@@ -1,5 +1,8 @@
 'use client';
 
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Import styles
+
 import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 
@@ -37,6 +40,17 @@ const projects = [
   },
 ];
 
+// TODO: Dynamic load from ../page.tsx ?
+type projectType = {
+  id: number;
+  name: string;
+  selected: boolean;
+  bgColor: string;
+  href: string;
+};
+
+const noFocusRing = ' outline-none';
+
 export default function PatientInfo({
   params,
 }: {
@@ -48,25 +62,91 @@ export default function PatientInfo({
   const [sex, setSex] = useState<string>('');
   const [phone, setPhone] = useState<string>('');
   const [doctor, setDoctor] = useState<string>('');
+  const [projects, setProjects] = useState<projectType[]>([
+    {
+      id: 1,
+      name: '08/01/2023',
+      selected: false,
+      href: '/_N_E/src/app/images/sample/ekg/fullEKG1.jpeg',
+      bgColor: 'bg-pink-600',
+    },
+    {
+      id: 2,
+      name: '07/31/2023',
+      selected: false,
+      href: '/_N_E/src/app/images/sample/ekg/fullEKG2.jpeg',
+      bgColor: 'bg-purple-600',
+    },
+    {
+      id: 3,
+      name: '07/30/2023',
+      selected: false,
+      href: '#',
+      bgColor: 'bg-yellow-500',
+    },
+    {
+      id: 4,
+      name: '07/29/2023',
+      selected: false,
+      href: '#',
+      bgColor: 'bg-green-500',
+    },
+  ]);
+  const [activeEKG, setActiveEKG] = useState<number>(-1);
 
+  const handleActiveEKG = (id: number) => {
+    if (id === activeEKG) setActiveEKG(-1);
+    else setActiveEKG(id);
+  };
+
+  const [notes, setNotes] = useState<string>(''); // State to hold notes
+
+  const handleNotesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setNotes(e.target.value);
+  };
 
   // Map between an EKG and its selected state.
   const [toggleEKGs, setToggleEKGs] = useState<
     { id: number; selected: boolean }[]
   >(projects.map(project => ({ id: project.ekg.id, selected: false })));
+
   const handleToggleEKGs = (id: number) => {
-    const newToggleState = toggleEKGs.map(
-      (project) => {
-        if (project.id === id) {
-          // Return the opposite of current selection state
-          return (project = { id: project.id, selected: !project.selected });
-        }
-        // Return self if no change
-        return project;
+    const newToggleState = projects.map(project => {
+      if (project.id === id) {
+        // if project is unselected, set it to activeEKG and vice versa
+        setActiveEKG(project.selected ? -1 : id);
+        return (project = { ...project, selected: !project.selected });
       }
-    );
-    setToggleEKGs(newToggleState);
+      return project;
+    });
+    setProjects(newToggleState);
   };
+
+  // eslint-disable-next-line no-unused-vars, unicorn/consistent-function-scoping
+  const handleColorChange = (id: number) => {
+    console.log('TODO CHANGE COLOR');
+  };
+
+  const handleKeyPress = (event: any) => {
+    const allowedKeys = ['ArrowUp', 'ArrowDown'];
+    if (activeEKG === -1 || !allowedKeys.includes(event.key)) return;
+    // prevents scrolling
+    event.preventDefault();
+    const activeEKGIndex = projects.findIndex(
+      project => project.id === activeEKG
+    );
+    let newIndex = -1;
+    if (event.key === 'ArrowUp') {
+      newIndex =
+        activeEKGIndex === 0 ? projects.length - 1 : activeEKGIndex - 1;
+    } else if (event.key === 'ArrowDown') {
+      newIndex =
+        activeEKGIndex === projects.length - 1 ? 0 : activeEKGIndex + 1;
+    }
+    // eslint-disable-next-line security/detect-object-injection
+    setActiveEKG(projects[newIndex].id);
+  };
+        
   const setAllEKGs = (state: boolean) => {
     const newToggleState = toggleEKGs.map(
       project => {
@@ -100,14 +180,6 @@ export default function PatientInfo({
                 Patient since <time dateTime="2020-08-25">August 25, 2020</time>
               </p>
             </div>
-          </div>
-          <div className="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-3 sm:space-y-0 sm:space-x-reverse md:mt-0 md:flex-row md:space-x-3">
-            <button
-              type="button"
-              className="inline-flex items-center justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-            >
-              Schedule Appointment
-            </button>
           </div>
         </div>
 
@@ -162,8 +234,9 @@ export default function PatientInfo({
             </button>
             <button
               type="button"
+
               onClick={() => setOpenUploadModal(true)}
-              className="w-full mt-5 rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+              className="w-full rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover-bg-green-500 focus-visible-outline focus-visible-outline-2 focus-visible-outline-offset-2 focus-visible-outline-green-600"
             >
               Upload EKG
             </button>
@@ -175,7 +248,11 @@ export default function PatientInfo({
               <h2 className="text-sm font-medium text-gray-600">
                 Patient EKGs
               </h2>
-              <ul className="mt-3 grid grid-cols-1 gap-3">
+              <ul
+                className="mt-3 grid grid-cols-1 gap-3"
+                role="listbox"
+                onKeyDown={e => handleKeyPress(e)}
+              >
                 {projects.map(project => (
                   <li
                     key={project.ekg.name}
@@ -206,24 +283,45 @@ export default function PatientInfo({
                         {project.ekg.name}
                       </div>
                     </button>
+                    <button
+                      className={clsx(
+                        project.bgColor,
+                        'flex w-12 flex-shrink-0 items-center justify-center rounded-r-md text-sm font-medium text-white',
+                        project.selected ? 'border-r-8 border-blue-400' : '',
+                        noFocusRing
+                      )}
+                      onClick={() => handleColorChange(project.id)}
+                    />
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="w-full mt-5 rounded-md bg-white border border-gray-200 px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-md h-[420px] flex flex-col">
-              <h2 className="text-sm font-medium text-gray-600 pb-4">Notes</h2>
-              <textarea className="text-sm font-medium rounded-md border border-gray-300 w-full resize-none h-auto flex-grow mb-2"></textarea>
+            <div className="w-full mt-5 rounded-md bg-white border border-gray-200 px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-md">
+              <h2 className="text-sm font-medium text-gray-600">Notes</h2>
+              <ReactQuill
+                value={notes}
+                onChange={setNotes}
+                modules={modules}
+                formats={formats}
+                style={{ height: '100%' }}
+              />
             </div>
           </div>
           <div className="col-span-3">
             <div className="w-full flex flex-col rounded-md bg-white shadow-md border border-gray-200 h-5/6">
-              {/* Will be image wrapper at some point for manipulation */}
-              {projects.map(project => (
-                // Dynamic image source.
-                toggleEKGs
-                  .filter(p => p.id === project.ekg.id)
-                  .some(p => p.selected) && <EKGMovable ekg={project.ekg}></EKGMovable>
-              ))}
+              <div
+                style={{ backgroundImage: `url('/EKG_Background.png')` }}
+                className="w-full flex flex-col rounded-md bg-cover bg-center shadow-md border border-gray-200 h-5/6"
+              >
+                {/* Will be image wrapper at some point for manipulation */}
+                {projects.map(
+                  project =>
+                    (project.selected || project.id === activeEKG) && (
+                      // eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element
+                      <EKGMovable ekg={project.ekg}/>
+                    )
+                )}
+              </div>
             </div>
           </div>
         </div>
