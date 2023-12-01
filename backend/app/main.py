@@ -1,7 +1,7 @@
 import sys
 from http import HTTPStatus
 
-from api.v1 import user_router
+from api.v1 import user_router, upload_router
 from exceptions import EKGException, EKGExceptionCode
 from fastapi import FastAPI, Request
 from fastapi.encoders import jsonable_encoder
@@ -70,3 +70,4 @@ def ekg_openapi() -> dict:
 
 app.openapi = ekg_openapi
 app.include_router(user_router, prefix="/v1")
+app.include_router(upload_router, prefix="/v1")

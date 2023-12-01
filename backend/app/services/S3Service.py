@@ -3,6 +3,7 @@ import io
 import boto3
 from fastapi import UploadFile
 
+from constants.constants import AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY, REGION
 
 class S3Service:
     """
@@ -13,8 +14,14 @@ class S3Service:
     """
 
     def __init__(self):
-        self.client = boto3.client("s3")
-        self.resource = boto3.resource("s3")
+        self.client = boto3.client("s3",
+            region_name=REGION,
+            aws_access_key_id=AWS_ACCESS_KEY,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
+        self.resource = boto3.resource("s3",
+            region_name=REGION,
+            aws_access_key_id=AWS_ACCESS_KEY,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
 
     def check_if_directory_exists(self, bucket_name: str, directory: str) -> bool:
         objects = list(

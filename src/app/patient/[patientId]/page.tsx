@@ -88,13 +88,12 @@ export default function PatientInfo({
     else setActiveEKG(id);
   };
 
-  
   const [notes, setNotes] = useState<string>(''); // State to hold notes
 
   const handleNotesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNotes(e.target.value);
   };
-  
+
   const handleToggleEKGs = (id: number) => {
     const newToggleState = projects.map(project => {
       if (project.id === id) {
@@ -231,8 +230,8 @@ export default function PatientInfo({
                     key={project.name}
                     className={clsx(
                       activeEKG === project.id || project.selected
-                        ? 'border border-2 border-blue-400'
-                        : 'border border-2 border-transparent',
+                        ? 'border-2 border-blue-400'
+                        : 'border-2 border-transparent',
                       'col-span-1 flex rounded-md shadow-sm hover:border-2 hover:border-blue-400'
                     )}
                   >
@@ -290,18 +289,23 @@ export default function PatientInfo({
           </div>
           <div className="col-span-3">
             <div className="w-full flex flex-col rounded-md bg-white shadow-md border border-gray-200 h-5/6">
-              {/* Will be image wrapper at some point for manipulation */}
-              {projects.map(
-                project =>
-                  (project.selected || project.id === activeEKG) && (
-                    // eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element
-                    <img
-                      key={project.id}
-                      src={project.href}
-                      className="mx-auto py-10 px-10 w-full h-full object-cover"
-                    ></img>
-                  )
-              )}
+              <div
+                style={{ backgroundImage: `url('/EKG_Background.png')` }}
+                className="w-full flex flex-col rounded-md bg-cover bg-center shadow-md border border-gray-200 h-5/6"
+              >
+                {/* Will be image wrapper at some point for manipulation */}
+                {projects.map(
+                  project =>
+                    (project.selected || project.id === activeEKG) && (
+                      // eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element
+                      <img
+                        key={project.id}
+                        src={project.href}
+                        className="mx-auto py-10 px-10 w-full h-full object-cover"
+                      ></img>
+                    )
+                )}
+              </div>
             </div>
           </div>
         </div>
