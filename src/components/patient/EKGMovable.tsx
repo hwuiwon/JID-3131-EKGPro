@@ -4,7 +4,7 @@ import Draggable from 'react-draggable';
 
 import im from '../../images/sample/ekg/fullEKG1.jpeg';
 
-import { EKG } from '@/constants/Ekg';
+import { EKG } from '@/constants/EKG';
 
 const EKGMovable = (props: { ekg: EKG }) => {
   const className = `box ${props.ekg.bgColor}`;
@@ -20,7 +20,7 @@ const EKGMovable = (props: { ekg: EKG }) => {
           style={{ padding: '10px', margin: 'auto' }}
           className={className}
         ></div>
-        <div /*style={{margin: "4px", flex: "1"}} */>
+        <div>
           <Image
             src={im}
             alt="EKG"

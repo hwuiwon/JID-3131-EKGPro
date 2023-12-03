@@ -83,12 +83,16 @@ export default function PatientInfo({
   ]);
   const [activeEKG, setActiveEKG] = useState<number>(-1);
 
-  const handleActiveEKG = (id: number) => {
-    if (id === activeEKG) setActiveEKG(-1);
-    else setActiveEKG(id);
-  };
+  // const handleActiveEKG = (id: number) => {
+  //   if (id === activeEKG) setActiveEKG(-1);
+  //   else setActiveEKG(id);
+  // };
 
-  const [notes, setNotes] = useState<string>('');
+  const [notes, setNotes] = useState<string>(''); // State to hold notes
+
+  // const handleNotesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  //   setNotes(e.target.value);
+  // };
 
   // Map between an EKG and its selected state.
   const [toggleEKGs, setToggleEKGs] = useState<
@@ -107,10 +111,9 @@ export default function PatientInfo({
     setProjects(newToggleState);
   };
 
-  // eslint-disable-next-line no-unused-vars, unicorn/consistent-function-scoping
-  const handleColorChange = (id: number) => {
-    console.log('TODO CHANGE COLOR');
-  };
+  // const handleColorChange = (id: number) => {
+  //   console.log('TODO CHANGE COLOR', id);
+  // };
 
   const handleKeyPress = (event: any) => {
     const allowedKeys = ['ArrowUp', 'ArrowDown'];
@@ -285,7 +288,7 @@ export default function PatientInfo({
                         project.selected ? 'border-r-8 border-blue-400' : '',
                         noFocusRing
                       )}
-                      onClick={() => handleColorChange(project.id)}
+                      // onClick={() => handleColorChange(project.id)}
                     />
                   </li>
                 ))}

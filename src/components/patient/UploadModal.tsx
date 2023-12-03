@@ -15,7 +15,7 @@ export default function UploadModal({ open, setOpen }: UploadModalProperties) {
   const [title, setTitle] = useState('');
   const [date, setDate] = useState('');
   const [notes, setNotes] = useState('');
-  
+
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] ?? undefined;
     setSelectedFile(file);
@@ -30,7 +30,7 @@ export default function UploadModal({ open, setOpen }: UploadModalProperties) {
           method: 'POST',
           body: formData,
         });
-  
+
         if (response.status === 200) {
           // Handle success
           console.log('File uploaded successfully');
@@ -86,13 +86,20 @@ export default function UploadModal({ open, setOpen }: UploadModalProperties) {
                       className="mb-5 text-base font-semibold leading-6 text-gray-900"
                     >
                       Upload File
-                      {fileNotSelectedMessage ? 
-                      <div className='mb-5 mt-3 text-sm leading-6 text-red-500'>{fileNotSelectedMessage}</div> : 
-                      <div></div>}
+                      {fileNotSelectedMessage ? (
+                        <div className="mb-5 mt-3 text-sm leading-6 text-red-500">
+                          {fileNotSelectedMessage}
+                        </div>
+                      ) : (
+                        <div></div>
+                      )}
                     </Dialog.Title>
                     {/* Title Input */}
                     <div className="mb-4">
-                      <label className="block text-sm font-medium text-gray-700">
+                      <label
+                        className="block text-sm font-medium text-gray-700"
+                        htmlFor="title"
+                      >
                         Title
                       </label>
                       <input
@@ -106,7 +113,10 @@ export default function UploadModal({ open, setOpen }: UploadModalProperties) {
 
                     {/* Date Input */}
                     <div className="mb-4">
-                      <label className="block text-sm font-medium text-gray-700">
+                      <label
+                        className="block text-sm font-medium text-gray-700"
+                        htmlFor="date"
+                      >
                         Date
                       </label>
                       <input
@@ -119,7 +129,10 @@ export default function UploadModal({ open, setOpen }: UploadModalProperties) {
 
                     {/* Notes Textarea */}
                     <div className="mb-4">
-                      <label className="block text-sm font-medium text-gray-700">
+                      <label
+                        className="block text-sm font-medium text-gray-700"
+                        htmlFor="notes"
+                      >
                         Notes
                       </label>
                       <textarea
