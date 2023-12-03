@@ -1,6 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { CheckCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { ChangeEvent, Fragment, useState } from 'react';
+import { Fragment, useState } from 'react';
 
 interface UploadModalProperties {
   open: boolean;
@@ -11,18 +11,11 @@ export default function AddAppointmentModal({
   open,
   setOpen,
 }: UploadModalProperties) {
-  const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
   const [alertMessage, setAlertMessage] = useState('');
-
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0] ?? undefined;
-    setSelectedFile(file);
-  };
 
   const handleUpload = () => {
     // do something
     setOpen(false);
-    setSelectedFile(undefined);
   };
 
   return (
@@ -99,7 +92,7 @@ export default function AddAppointmentModal({
                               id="date"
                               name="date"
                               type="date"
-                              autoComplete="date"
+                              // autoComplete="date"
                               required
                               className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                             />
@@ -109,7 +102,7 @@ export default function AddAppointmentModal({
                               id="time"
                               name="time"
                               type="time"
-                              autoComplete="time"
+                              // autoComplete="time"
                               required
                               className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                             />

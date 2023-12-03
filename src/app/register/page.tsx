@@ -13,15 +13,18 @@ export default function Register() {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
-  const [passwordMismatch, setPasswordMismatch] = useState('');
+  const [passwordMismatch, setPasswordMismatch] = useState(false);
+
   const onSubmit = () => {
     // eslint-disable-next-line security/detect-possible-timing-attacks
     if (pass !== confirmPass) {
       setPasswordMismatch(true);
       return;
     }
+
     setPasswordMismatch(false);
     console.log('Submitting: ' + email + ' ' + pass);
+
     fetch('http://127.0.0.1:8000/v1/user', {
       method: 'POST',
       headers: {
