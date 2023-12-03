@@ -38,8 +38,6 @@ const formats = [
   'align',
 ];
 
-const noFocusRing = ' outline-none';
-
 export default function PatientInfo({
   params,
 }: {
@@ -242,46 +240,56 @@ export default function PatientInfo({
                 role="listbox"
                 onKeyDown={e => handleKeyPress(e)}
               >
-                {projects.map(project => (
-                  <li
-                    key={project.name}
-                    className={clsx(
-                      activeEKG === project.id || project.selected
-                        ? 'border-2 border-blue-400'
-                        : 'border-2 border-transparent',
-                      'col-span-1 flex rounded-md shadow-sm hover:border-2 hover:border-blue-400'
-                    )}
-                  >
-                    <button
+                {projects.map(project => {
+                  console.log('project:', project.selected);
+                  // const selected = 'border-r-8 border-blue-400';
+                  // const active = 'border-2 border-blue-400';
+                  // const default = 'border-2 border-transparent';
+                  var selectedStyle = '';
+                  if (project.selected) {
+                    selectedStyle = 'border-r-8 border-blue-400';
+                  } else if (activeEKG === project.id) {
+                    selectedStyle = 'border-2 border-blue-400';
+                  } else {
+                    selectedStyle = 'border-2 border-transparent';
+                  }
+                  return (
+                    <li
+                      key={project.name}
                       className={clsx(
-                        project.bgColor,
-                        'flex w-12 flex-shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white',
-                        // Displays whether EKG is selected.
-                        toggleEKGs
-                          .filter(p => p.id === project.id)
-                          .some(p => p.selected)
-                          ? 'border-y-2 border-l-2 border-green-400'
-                          : ''
+                        selectedStyle,
+                        'col-span-1 flex rounded-md shadow-sm hover:border-2 hover:border-blue-400'
                       )}
-                      onClick={() => handleToggleEKGs(project.id)}
-                    />
-                    <button
-                      className={clsx(
-                        'flex flex-1 items-center truncate rounded-r-md bg-white hover:bg-gray-100',
-                        // Displays whether EKG is selected.
-                        toggleEKGs
-                          .filter(p => p.id === project.id)
-                          .some(p => p.selected)
-                          ? 'border-y-2 border-r-8 border-green-400'
-                          : 'border-y border-r border-gray-200'
-                      )}
-                      onClick={() => handleToggleEKGs(project.id)}
                     >
-                      <div className="flex-1 truncate px-4 py-2 text-sm font-medium text-left">
-                        {project.name}
-                      </div>
-                    </button>
-                    <button
+                      <button
+                        className={clsx(
+                          project.bgColor,
+                          'flex w-12 flex-shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white',
+                          toggleEKGs
+                            .filter(p => p.id === project.id)
+                            .some(p => p.selected)
+                            ? 'border-y-2 border-l-2 border-green-400'
+                            : ''
+                        )}
+                        onClick={() => handleToggleEKGs(project.id)}
+                      />
+                      <button
+                        className={clsx(
+                          'flex flex-1 items-center truncate rounded-r-md bg-white outline-none',
+                          // Displays whether EKG is selected.
+                          toggleEKGs
+                            .filter(p => p.id === project.id)
+                            .some(p => p.selected)
+                            ? 'border-y-2 border-r-8 border-green-400'
+                            : 'border-y border-r border-gray-200'
+                        )}
+                        onClick={() => handleToggleEKGs(project.id)}
+                      >
+                        <div className="flex-1 truncate px-4 py-2 text-sm font-medium text-left outline-none">
+                          {project.name}
+                        </div>
+                      </button>
+                      {/* <button
                       className={clsx(
                         project.bgColor,
                         'flex w-12 flex-shrink-0 items-center justify-center rounded-r-md text-sm font-medium text-white',
@@ -289,9 +297,10 @@ export default function PatientInfo({
                         noFocusRing
                       )}
                       // onClick={() => handleColorChange(project.id)}
-                    />
-                  </li>
-                ))}
+                    /> */}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
             <div className="w-full mt-5 rounded-md bg-white border border-gray-200 px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-md">
