@@ -1,14 +1,23 @@
 'use client';
 
+import clsx from 'clsx';
+import React, { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Import styles
 
-import clsx from 'clsx';
-import React, { useEffect, useState } from 'react';
-
 import Sidebar from '@/components/Common/Sidebar';
+import EKGMovable from '@/components/patient/EKGMovable';
 import UploadModal from '@/components/patient/UploadModal';
 import { Page } from '@/constants/Navigation';
+
+// TODO: Dynamic load from ../page.tsx ?
+type projectType = {
+  id: number;
+  name: string;
+  selected: boolean;
+  bgColor: string;
+  href: string;
+};
 
 const modules = {
   toolbar: [
@@ -28,15 +37,6 @@ const formats = [
   'underline',
   'align',
 ];
-
-// TODO: Dynamic load from ../page.tsx ?
-type projectType = {
-  id: number;
-  name: string;
-  selected: boolean;
-  bgColor: string;
-  href: string;
-};
 
 const noFocusRing = ' outline-none';
 
@@ -88,11 +88,12 @@ export default function PatientInfo({
     else setActiveEKG(id);
   };
 
-  const [notes, setNotes] = useState<string>(''); // State to hold notes
+  const [notes, setNotes] = useState<string>('');
 
-  const handleNotesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setNotes(e.target.value);
-  };
+  // Map between an EKG and its selected state.
+  const [toggleEKGs, setToggleEKGs] = useState<
+    { id: number; selected: boolean }[]
+  >(projects.map(project => ({ id: project.id, selected: false })));
 
   const handleToggleEKGs = (id: number) => {
     const newToggleState = projects.map(project => {
@@ -131,14 +132,12 @@ export default function PatientInfo({
     setActiveEKG(projects[newIndex].id);
   };
 
-  // const handleEnterKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-  //   if (e.key === 'Enter') {
-  //     // Prevent the default new line behavior
-  //     e.preventDefault();
-  //     // Add a bullet point when Enter is pressed
-  //     setNotes(prevNotes => prevNotes + '\n• ');
-  //   }
-  // };
+  const setAllEKGs = (state: boolean) => {
+    const newToggleState = toggleEKGs.map(project => {
+      return (project = { id: project.id, selected: state });
+    });
+    setToggleEKGs(newToggleState);
+  };
 
   useEffect(() => {
     // fetch information using patient id
@@ -208,13 +207,28 @@ export default function PatientInfo({
         </div>
 
         <div className="mx-auto mt-8 grid grid-cols-1 lg:gap-6 sm:px-6 lg:grid-flow-col-dense lg:grid-cols-4 min-h-screen">
-          <div className="col-span-1">
+          <div className="col-span-1 space-y-3">
+            <button
+              type="button"
+              className="w-full rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+              onClick={() => setAllEKGs(toggleEKGs.some(p => !p.selected))}
+            >
+              View All Segments
+            </button>
             <button
               type="button"
               onClick={() => setOpenUploadModal(true)}
               className="w-full rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover-bg-green-500 focus-visible-outline focus-visible-outline-2 focus-visible-outline-offset-2 focus-visible-outline-green-600"
             >
               Upload EKG
+            </button>
+            <button
+              className="w-full mt-5 rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+              onClick={() => {
+                /* TODO: Hit GET API */
+              }}
+            >
+              Download Chosen EKGs{' '}
             </button>
             <div className="w-full mt-5 rounded-md bg-white border border-gray-200 px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-md">
               <h2 className="text-sm font-medium text-gray-600">
@@ -237,29 +251,30 @@ export default function PatientInfo({
                   >
                     <button
                       className={clsx(
-                        projects
+                        project.bgColor,
+                        'flex w-12 flex-shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white',
+                        // Displays whether EKG is selected.
+                        toggleEKGs
                           .filter(p => p.id === project.id)
                           .some(p => p.selected)
-                          ? 'bg-blue-400'
-                          : 'border border-1 border-gray-300',
-                        'flex w-12 flex-shrink-0 items-center justify-center rounded-l-md text-sm font-medium text-white',
-                        noFocusRing
+                          ? 'border-y-2 border-l-2 border-green-400'
+                          : ''
                       )}
                       onClick={() => handleToggleEKGs(project.id)}
                     />
                     <button
                       className={clsx(
-                        'flex flex-1 items-center truncate bg-white',
-                        noFocusRing
+                        'flex flex-1 items-center truncate rounded-r-md bg-white hover:bg-gray-100',
+                        // Displays whether EKG is selected.
+                        toggleEKGs
+                          .filter(p => p.id === project.id)
+                          .some(p => p.selected)
+                          ? 'border-y-2 border-r-8 border-green-400'
+                          : 'border-y border-r border-gray-200'
                       )}
-                      onClick={() => handleActiveEKG(project.id)}
+                      onClick={() => handleToggleEKGs(project.id)}
                     >
-                      <div
-                        className={
-                          'flex-1 truncate px-4 py-2 text-sm font-medium text-left' +
-                          noFocusRing
-                        }
-                      >
+                      <div className="flex-1 truncate px-4 py-2 text-sm font-medium text-left">
                         {project.name}
                       </div>
                     </button>
@@ -283,6 +298,7 @@ export default function PatientInfo({
                 onChange={setNotes}
                 modules={modules}
                 formats={formats}
+                // TODO change this to be better sized
                 style={{ height: '100%' }}
               />
             </div>
@@ -298,11 +314,7 @@ export default function PatientInfo({
                   project =>
                     (project.selected || project.id === activeEKG) && (
                       // eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element
-                      <img
-                        key={project.id}
-                        src={project.href}
-                        className="mx-auto py-10 px-10 w-full h-full object-cover"
-                      ></img>
+                      <EKGMovable key={project.id} ekg={project} />
                     )
                 )}
               </div>
