@@ -308,7 +308,7 @@ export default function PatientInfo({
                 })}
               </ul>
             </div>
-            <div className="w-full mt-5 rounded-md bg-white border border-gray-200 px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-md">
+            <div className="w-full mt-5 h-96 rounded-md bg-white border border-gray-200 px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-md">
               <h2 className="text-sm font-medium text-gray-600">Notes</h2>
               <ReactQuill
                 value={notes}
@@ -316,7 +316,8 @@ export default function PatientInfo({
                 modules={modules}
                 formats={formats}
                 // TODO change this to be better sized
-                style={{ height: '100%' }}
+                // style={{ height: '100%' }}
+                className="h-64"
               />
             </div>
           </div>
