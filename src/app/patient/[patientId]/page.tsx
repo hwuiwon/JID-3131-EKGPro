@@ -152,7 +152,7 @@ export default function PatientInfo({
   return (
     <React.Fragment>
       <Sidebar selectedPage={Page.PATIENT} />
-      <UploadModal open={openUploadModal} setOpen={setOpenUploadModal} />
+      <UploadModal open={openUploadModal} setOpen={setOpenUploadModal} id={params.patientId} />
       <div className="xl:pl-72 p-5">
         <div className="mx-auto px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:px-8">
           <p>Current Date: {new Date().toLocaleDateString()}</p>

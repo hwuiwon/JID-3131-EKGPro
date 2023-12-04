@@ -5,9 +5,10 @@ import { ChangeEvent, Fragment, useState } from 'react';
 interface UploadModalProperties {
   open: boolean;
   setOpen: (value: boolean) => void;
+  id: string;
 }
 
-export default function UploadModal({ open, setOpen }: UploadModalProperties) {
+export default function UploadModal({ open, setOpen, id }: UploadModalProperties) {
   const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
   const [alertMessage, setAlertMessage] = useState('');
   const [fileNotSelectedMessage, setFileNotSelectedMessage] = useState('');
