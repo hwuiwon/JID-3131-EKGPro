@@ -14,7 +14,48 @@ const people = [
     doctor: 'Dr. Jacob Jones',
     contact: '(229) 699-7346',
   },
-  // More people...
+  {
+    name: 'Orestis Vratimos',
+    id: '1234567890',
+    lastVisit: '10/11/2024 10:30AM',
+    doctor: 'Dr. Sarah Smith',
+    contact: '(555) 123-4567',
+  },
+  {
+    name: 'Panagiota Kokota',
+    id: '9876504321',
+    lastVisit: '10/12/2024 02:15PM',
+    doctor: 'Dr. Michael Johnson',
+    contact: '(777) 987-6543',
+  },
+  {
+    name: 'Alice Johnson',
+    id: '4567809012',
+    lastVisit: '10/13/2024 04:45PM',
+    doctor: 'Dr. Emily Davis',
+    contact: '(888) 555-7890',
+  },
+  {
+    name: 'Bob Anderson',
+    id: '3456789001',
+    lastVisit: '10/14/2024 11:00AM',
+    doctor: 'Dr. Christopher Miller',
+    contact: '(333) 777-2222',
+  },
+  {
+    name: 'Eva Garcia',
+    id: '5678090123',
+    lastVisit: '10/15/2024 03:30PM',
+    doctor: 'Dr. Jessica White',
+    contact: '(444) 999-8888',
+  },
+  {
+    name: 'Marcus Turner',
+    id: '7890102345',
+    lastVisit: '10/16/2024 09:45AM',
+    doctor: 'Dr. Samantha Brown',
+    contact: '(666) 333-1111',
+  },
 ];
 
 export default function Patient() {

@@ -53,7 +53,7 @@ export default function PatientInfo({
     {
       id: 1,
       name: '08/01/2023',
-      selected: false,
+      selected: true,
       href: '/_N_E/src/app/images/sample/ekg/fullEKG1.jpeg',
       bgColor: 'bg-pink-600',
     },
