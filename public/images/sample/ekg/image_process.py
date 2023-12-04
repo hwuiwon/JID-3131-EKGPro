@@ -19,7 +19,7 @@ def process_image(image_path):
     
     inverted_isolated_lines = np.invert(isolated_lines)
 
-    output_path = 'processed_EKG.png'
+    output_path = 'public/images/sample/ekg/processed_EKG.png'
     Image.fromarray(inverted_isolated_lines).save(output_path)
 
     return(output_path)
