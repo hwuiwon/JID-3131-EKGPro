@@ -54,6 +54,12 @@ class S3Service:
 
         if not directory_exists:
             return
+    
+    def download_file(self, bucket_name: str, filename: str, path=None) -> None:
+        if path is None:
+            path = filename
+
+        self.client.download_fileobj(path, filename, bucket_name)
 
         with open(filename, "wb") as data:
             self.client.download_fileobj(bucket_name, f"{user}/{filename}", data)

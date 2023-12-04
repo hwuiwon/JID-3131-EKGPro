@@ -233,9 +233,14 @@ export default function PatientInfo({
               onClick={() => {
                 projects.map(async project => {
                   if (project.selected) {
-                    const response = await fetch(`http://127.0.0.1:8000/v1/download?id=${project.id}`, {
+                    const response = await fetch(`http://127.0.0.1:8000/v1/download?id=${project.id, project.name}`, {
                   method: 'GET'
                 });
+                    if (response.status === 200) {
+                      console.log('File downloaded successfully');
+                    } else {
+                      console.log('File download failed');
+                    }
                   }
                 })
               }}

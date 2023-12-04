@@ -12,3 +12,7 @@ class RegisterUserResponse(BaseModel):
 class UploadEKGResponse(BaseModel):
     status: int
     message: str
+
+class DownloadEKGResponse(BaseModel):
+    status: int
+    message: str
