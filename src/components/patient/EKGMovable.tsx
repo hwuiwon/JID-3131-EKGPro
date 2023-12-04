@@ -52,7 +52,7 @@ const EKGMovable = (props: { ekg: EKG }) => {
             onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#a9a9a9'} // Lighter gray on hover
             onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#EEEEEE'} // Back to original color
           >
-            Process EKG Image
+            Convert EKG
           </button>
 
         </div>
