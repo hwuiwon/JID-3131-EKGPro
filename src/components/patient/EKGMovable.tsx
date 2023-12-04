@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
 import Image from 'next/image';
+import React, { useState, useRef } from 'react';
 import Draggable from 'react-draggable';
 
 import { EKG } from '@/constants/EKG';
@@ -11,7 +11,9 @@ interface ProcessImageResponse {
 
 const EKGMovable = (props: { ekg: EKG }) => {
   const [imageSrc, setImageSrc] = useState('/images/sample/ekg/fullEKG1.jpeg'); // Initial image source
-  const [processedImageData, setProcessedImageData] = useState<string | null>(null);
+  const [processedImageData, setProcessedImageData] = useState<string | null>(
+    null
+  );
   const className = `box ${props.ekg.bgColor}`;
   const draggableRef = useRef(null);
 
@@ -24,7 +26,7 @@ const EKGMovable = (props: { ekg: EKG }) => {
         setProcessedImageData(data.message);
       }
     } catch (error) {
-      console.error("Error processing image:", error);
+      console.error('Error processing image:', error);
     }
   };
 
@@ -38,23 +40,27 @@ const EKGMovable = (props: { ekg: EKG }) => {
     >
       <div style={{ flex: '2' }} ref={draggableRef}>
         <div style={{ padding: '10px', margin: 'auto' }} className={className}>
-          <button 
-            onClick={processImage} 
-            style={{ 
+          {/*  eslint-disable-next-line jsx-a11y/mouse-events-have-key-events */}
+          {/* <button
+            onClick={processImage}
+            style={{
               backgroundColor: '#EEEEEE', // Gray background
               border: '2px solid #707070', // Slightly darker gray border
               borderRadius: '8px', // Rounded corners
-              padding: '10px 20px', 
+              padding: '10px 20px',
               cursor: 'pointer',
               outline: 'none',
-              transition: 'background-color 0.3s ease' // Smooth transition for the hover effect
+              transition: 'background-color 0.3s ease', // Smooth transition for the hover effect
             }}
-            onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#a9a9a9'} // Lighter gray on hover
-            onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#EEEEEE'} // Back to original color
+            onMouseOver={e =>
+              (e.currentTarget.style.backgroundColor = '#a9a9a9')
+            } // Lighter gray on hover
+            onMouseOut={e =>
+              (e.currentTarget.style.backgroundColor = '#EEEEEE')
+            } // Back to original color
           >
             Convert EKG
-          </button>
-
+          </button> */}
         </div>
         <div>
           <Image
