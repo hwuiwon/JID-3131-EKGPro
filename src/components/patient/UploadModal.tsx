@@ -27,7 +27,7 @@ export default function UploadModal({ open, setOpen, id }: UploadModalProperties
       const formData = new FormData();
       formData.append('file', selectedFile);
       try {
-        const response = await fetch('http://127.0.0.1:8000/v1/upload', {
+        const response = await fetch(`http://127.0.0.1:8000/v1/upload?id=${id}`, {
           method: 'POST',
           body: formData,
         });
