@@ -13,3 +13,7 @@ class RegisterUserRequest(BaseModel):
 class UploadFileRequest(BaseModel):
     id: str
     file: UploadFile
+
+class DownloadFileRequest(BaseModel):
+    id: str
+    filename: str
