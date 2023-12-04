@@ -16,13 +16,13 @@ const people = [
   },
   {
     name: 'Orestis Vratimos',
-    id: '1234506789',
+    id: '1234567890',
     lastVisit: '10/11/2024 10:30AM',
     doctor: 'Dr. Sarah Smith',
     contact: '(555) 123-4567',
   },
   {
-    name: 'Eva Garcia',
+    name: 'Panagiota Kokota',
     id: '9876504321',
     lastVisit: '10/12/2024 02:15PM',
     doctor: 'Dr. Michael Johnson',
@@ -43,7 +43,7 @@ const people = [
     contact: '(333) 777-2222',
   },
   {
-    name: 'Panagiota Kokota',
+    name: 'Eva Garcia',
     id: '5678090123',
     lastVisit: '10/15/2024 03:30PM',
     doctor: 'Dr. Jessica White',
@@ -75,6 +75,19 @@ export default function Patient() {
   //     ? str1.localeCompare(str2)
   //     : str2.localeCompare(str1);
   // };
+
+  const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: true,
+  };
+
+  const currentDate = new Date().toLocaleString('en-US', options);
 
   const inputReference = useRef<HTMLInputElement>(null);
 
@@ -130,6 +143,7 @@ export default function Patient() {
             </div>
           </div>
           <div className="mt-8 flow-root">
+            <p className="text-gray-500 text-sm mt-2">Current: {currentDate}</p>
             <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
               <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                 <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
