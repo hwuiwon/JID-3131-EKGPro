@@ -3,6 +3,7 @@ from http import HTTPStatus
 from exceptions import EKGException, EKGExceptionCode
 from fastapi import APIRouter, File, UploadFile
 from loguru import logger
+from models.RequestModels import UploadFileRequest
 from models.ResponseModels import ErrorDTO, UploadEKGResponse
 from services import S3Service
 
@@ -26,8 +27,17 @@ router = APIRouter()
     },
 )
 async def upload_ekg(
-    file: UploadFile
+    file: UploadFile, id: str
 ):
+    logger.info('here')
+    if (
+        not id
+        or not file
+    ):
+        raise EKGException(
+            code=EKGExceptionCode.BAD_REQUEST,
+            message="Invalid UploadFileRequest",
+        )
     # Verify that the file is an image (you can add more validations here) 
     if not file.content_type.startswith("image/"):
         # fix custom error for not uploading image
@@ -39,8 +49,10 @@ async def upload_ekg(
     
     s3_service = S3Service()
     bucket_name = 'ekgs'
+    file_path = str(id + '/' + file.filename)
+    logger.info(file_path)
     try:
-        s3_service.upload_file(bucket_name, file)
+        s3_service.upload_file(bucket_name, file, path=file_path)
     except EKGException as e:
         logger.error(e)
         raise
