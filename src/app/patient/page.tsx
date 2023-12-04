@@ -16,7 +16,7 @@ const people = [
   },
   {
     name: 'Orestis Vratimos',
-    id: '1234567890',
+    id: '1234506789',
     lastVisit: '10/11/2024 10:30AM',
     doctor: 'Dr. Sarah Smith',
     contact: '(555) 123-4567',
