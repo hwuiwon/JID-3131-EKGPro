@@ -38,7 +38,23 @@ const EKGMovable = (props: { ekg: EKG }) => {
     >
       <div style={{ flex: '2' }} ref={draggableRef}>
         <div style={{ padding: '10px', margin: 'auto' }} className={className}>
-          <button onClick={processImage}>Process EKG Image</button>
+          <button 
+            onClick={processImage} 
+            style={{ 
+              backgroundColor: '#EEEEEE', // Gray background
+              border: '2px solid #707070', // Slightly darker gray border
+              borderRadius: '8px', // Rounded corners
+              padding: '10px 20px', 
+              cursor: 'pointer',
+              outline: 'none',
+              transition: 'background-color 0.3s ease' // Smooth transition for the hover effect
+            }}
+            onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#a9a9a9'} // Lighter gray on hover
+            onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#EEEEEE'} // Back to original color
+          >
+            Process EKG Image
+          </button>
+
         </div>
         <div>
           <Image
@@ -53,7 +69,6 @@ const EKGMovable = (props: { ekg: EKG }) => {
               filter: 'opacity(50%)',
             }}
           />
-          {processedImageData && <div>{processedImageData}</div>}
         </div>
       </div>
     </Draggable>
