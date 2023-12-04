@@ -64,6 +64,9 @@ export default function Patient() {
                 A list of all of your patients and their overview. Click the
                 patient's name to see detailed information and EKG data.
               </p>
+              <p className="mt-2 text-sm text-gray-700">
+                Total Patients: {people.length}
+              </p>
             </div>
             <div className="mt-4 sm:ml-16 sm:mt-0 flex flex-row">
               <div className="relative flex mr-4">
