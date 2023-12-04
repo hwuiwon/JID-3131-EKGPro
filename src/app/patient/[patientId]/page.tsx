@@ -53,7 +53,7 @@ export default function PatientInfo({
     {
       id: 1,
       name: '08/01/2023',
-      selected: false,
+      selected: true,
       href: '/_N_E/src/app/images/sample/ekg/fullEKG1.jpeg',
       bgColor: 'bg-pink-600',
     },
@@ -152,9 +152,10 @@ export default function PatientInfo({
   return (
     <React.Fragment>
       <Sidebar selectedPage={Page.PATIENT} />
-      <UploadModal open={openUploadModal} setOpen={setOpenUploadModal} />
+      <UploadModal open={openUploadModal} setOpen={setOpenUploadModal} id={params.patientId} />
       <div className="xl:pl-72 p-5">
         <div className="mx-auto px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:px-8">
+          <p>Current Date: {new Date().toLocaleDateString()}</p>
           <div className="flex items-center space-x-5">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">
@@ -318,8 +319,8 @@ export default function PatientInfo({
           <div className="col-span-3">
             <div className="w-full flex flex-col rounded-md bg-white shadow-md border border-gray-200 h-5/6">
               <div
-                style={{ backgroundImage: `url('/EKG_Background.png')` }}
-                className="w-full flex flex-col rounded-md bg-cover bg-center shadow-md border border-gray-200 h-5/6"
+              // style={{ backgroundImage: `url('/EKG_Background.png')` }}
+              // className="w-full flex flex-col rounded-md bg-cover bg-center shadow-md border border-gray-200 h-5/6"
               >
                 {/* Will be image wrapper at some point for manipulation */}
                 {projects.map(

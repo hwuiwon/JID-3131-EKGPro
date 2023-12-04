@@ -5,9 +5,10 @@ import { ChangeEvent, Fragment, useState } from 'react';
 interface UploadModalProperties {
   open: boolean;
   setOpen: (value: boolean) => void;
+  id: string;
 }
 
-export default function UploadModal({ open, setOpen }: UploadModalProperties) {
+export default function UploadModal({ open, setOpen, id }: UploadModalProperties) {
   const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
   const [alertMessage, setAlertMessage] = useState('');
   const [fileNotSelectedMessage, setFileNotSelectedMessage] = useState('');
@@ -24,9 +25,12 @@ export default function UploadModal({ open, setOpen }: UploadModalProperties) {
   const handleUpload = async () => {
     if (selectedFile) {
       const formData = new FormData();
-      formData.append('file', selectedFile);
+      console.log(date);
+      console.log(typeof date);
+      const modifiedFile = new File([selectedFile], date, { type: selectedFile.type });
+      formData.append('file', modifiedFile);
       try {
-        const response = await fetch('http://127.0.0.1:8000/v1/upload', {
+        const response = await fetch(`http://127.0.0.1:8000/v1/upload?id=${id}`, {
           method: 'POST',
           body: formData,
         });

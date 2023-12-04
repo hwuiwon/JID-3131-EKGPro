@@ -52,9 +52,8 @@ export default function Example() {
         <main>
           <div className="p-5">
             <h3 className="text-lg font-semibold leading-6 text-gray-900">
-              Stats (Last 30 days)
+              Stats (Last 30 days) - Updated
             </h3>
-
             <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {stats.map(item => (
                 <div
@@ -95,7 +94,6 @@ export default function Example() {
                           aria-hidden="true"
                         />
                       )}
-
                       <span className="sr-only">
                         {' '}
                         {item.changeType === 'increase'
