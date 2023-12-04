@@ -22,7 +22,7 @@ const people = [
     contact: '(555) 123-4567',
   },
   {
-    name: 'Panagiota Kokota',
+    name: 'Eva Garcia',
     id: '9876504321',
     lastVisit: '10/12/2024 02:15PM',
     doctor: 'Dr. Michael Johnson',
@@ -43,7 +43,7 @@ const people = [
     contact: '(333) 777-2222',
   },
   {
-    name: 'Eva Garcia',
+    name: 'Panagiota Kokota',
     id: '5678090123',
     lastVisit: '10/15/2024 03:30PM',
     doctor: 'Dr. Jessica White',
