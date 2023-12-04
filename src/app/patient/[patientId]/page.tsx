@@ -155,6 +155,7 @@ export default function PatientInfo({
       <UploadModal open={openUploadModal} setOpen={setOpenUploadModal} />
       <div className="xl:pl-72 p-5">
         <div className="mx-auto px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:px-8">
+          <p>Current Date: {new Date().toLocaleDateString()}</p>
           <div className="flex items-center space-x-5">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">
