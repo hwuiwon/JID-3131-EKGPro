@@ -15,14 +15,14 @@ const people = [
     contact: '(229) 699-7346',
   },
   {
-    name: 'Orestis Vratimos',
+    name: 'John Doe',
     id: '1234567890',
     lastVisit: '10/11/2024 10:30AM',
     doctor: 'Dr. Sarah Smith',
     contact: '(555) 123-4567',
   },
   {
-    name: 'Panagiota Kokota',
+    name: 'Anna Smith',
     id: '9876504321',
     lastVisit: '10/12/2024 02:15PM',
     doctor: 'Dr. Michael Johnson',
