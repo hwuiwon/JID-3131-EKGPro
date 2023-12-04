@@ -231,7 +231,13 @@ export default function PatientInfo({
             <button
               className="w-full mt-5 rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
               onClick={() => {
-                /* TODO: Hit GET API */
+                projects.map(async project => {
+                  if (project.selected) {
+                    const response = await fetch(`http://127.0.0.1:8000/v1/download?id=${project.id}`, {
+                  method: 'GET'
+                });
+                  }
+                })
               }}
             >
               Download Chosen EKGs{' '}
