@@ -1,4 +1,4 @@
-# v0.5.0
+# v0.5.0 (December 4, 2023)
 
 ## New Features
 - Added ability to download EKGs
@@ -15,7 +15,7 @@
 ## Known Issues
 - N/A
 
-# v0.4.0
+# v0.4.0 (November 13, 2023)
 
 ## New Features
 - Added chart difference viewer
@@ -34,7 +34,7 @@
 ## Known Issues
 - N/A
 
-# v0.3.0
+# v0.3.0 (October 23, 2023)
 
 ## New Features
 - Backend was been refactored from Django to FastAPI
@@ -51,7 +51,7 @@
 - Sign in authentication needs to meet AWS format
 - EKG images are not populating in the analysis page
 
-# v0.2.0
+# v0.2.0 (October 2, 2023)
 
 ## New Features
 - Sign-up / Sign-in Authentication
@@ -63,7 +63,7 @@
 ## Known Issues
 - No backend integration for upload functionality
 
-# v0.1.0
+# v0.1.0 (September 11, 2023)
 
 ## New Features
 - Sign-up / Sign-in Pages
