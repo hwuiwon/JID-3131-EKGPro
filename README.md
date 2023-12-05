@@ -12,14 +12,6 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-### Setting Up Husky
-
-Run the comment below:
-
-```bash
-npx husky install
-```
-
 ### Running the servers for dev environment
 
 First, run the Next.js development server:
